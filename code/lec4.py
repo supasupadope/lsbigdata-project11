@@ -213,3 +213,9 @@ vector
 vector.shape
 result = matrix + vector
 result
+
+
+# x=np.array([1.0, 2.0, 3.0, 4.0])
+# y=np.array([[[1.0, 2.0, 3.0, 4.0]]])
+# x.shape
+# y.shape
