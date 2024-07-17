@@ -45,9 +45,38 @@ exam.iloc[np.where(exam["english"] >= 90)[0], 3]  # np.where 도 튜플이라 [0
 exam.iloc[exam[exam["english"] >= 90].index, 3]   # index 벡터도 작동
 
 # math 점수 50 이하 "-" 변경
+exam=pd.read_csv("data/exam.csv")
+exam.loc[exam["math"] <= 50, "math"] = "-"
 exam
 
+# "-" 결측치를 수학점수 평균 바꾸고 싶은 경우
+# 1
+math_mean = exam.loc[(exam["math"] != "-"), "math"].mean()
+exam.loc[exam['math']=='-','math'] = math_mean
 
+# 2
+math_mean = exam.query('math not in ["-"]')['math'].mean()
+exam.loc[exam['math']=='-','math'] = math_mean
+
+# 3
+math_mean = exam[exam["math"] != "-"]["math"].mean()
+exam.loc[exam['math']=='-','math'] = math_mean
+
+# 4
+exam.loc[exam['math'] == "-", ['math']] = np.nan
+math_mean = exam["math"].mean()
+exam.loc[pd.isna(exam['math']), ['math']] = math_mean
+exam
+
+# 5
+math_mean = np.nonmean(np.array([np.nan if x == '-' else float(x) for x in exam["math"]]))
+exam["math"] = np.where(exam["math"] == "-", math_mean, exam["math"])
+exam
+
+# 6
+math_mean = exam[exam["math"] != "-"]["math"].mean()
+exam["math"] = exam["math"].replace("-", math_mean)
+exam
 
 df.loc[df["score"] == 3.0, ["score"]] = 4
 df
