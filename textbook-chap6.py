@@ -84,3 +84,53 @@ df = pydataset.data("mpg")
 # 3. 새로운 변수를 생성했는지?
 # 4. 그룹 변수 기준으로 요약을 했는지?
 # 5. 정렬 했는지?
+
+test1 = pd.DataFrame({"id"     : [1, 2, 3, 4, 5], 
+                      "midterm": [60, 80, 70, 90, 85]})
+
+test2 = pd.DataFrame({"id"     : [1, 2, 3, 40, 5],
+                      "final"  : [70, 83, 65, 95, 80]})
+
+test1
+test2
+
+# Left Join
+total = pd.merge(test1, test2, how="left", on="id")
+total
+
+# Right Join
+total = pd.merge(test1, test2, how="right", on="id")
+total
+
+# Inner Join
+total = pd.merge(test1, test2, how="inner", on="id")
+total
+
+# Outer Join
+total = pd.merge(test1, test2, how="outer", on="id")
+total
+
+
+# exam = pd.read_csv("data/exam.csv")
+name = pd.DataFrame({"nclass": [1, 2, 3, 4, 5],
+                     "teacher": ["kim", "lee", "park", "choi", "jung"]})
+
+name
+pd.merge(exam, name, how="left", on="nclass")
+
+
+# 데이터를 세로로 쌓는 방법
+score1 = pd.DataFrame({"id"     : [1, 2, 3, 4, 5], 
+                      "score": [60, 80, 70, 90, 85]})
+
+score2 = pd.DataFrame({"id"     : [6, 7, 8, 9, 10],
+                      "score"  : [70, 83, 65, 95, 80]})
+score1
+score2
+score_all=pd.concat([score1, score2])
+score_all
+
+test1
+test2
+
+pd.concat([test1, test2], axis=1)
