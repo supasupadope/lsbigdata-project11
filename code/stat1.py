@@ -24,8 +24,8 @@ Y(num=100000, p=0.5).mean()
 # 가질수있는 값: 0, 1, 2
 # 20%, 50%, 30%
 def Z():
-    x=np.random.rand(1)
-    return np.where(x < 0.2, 0, np.where(x < 0.7, 1, 2))
+    w=np.random.rand(1)
+    return np.where(w < 0.2, 0, np.where(w < 0.7, 1, 2))
 
 Z()
 
