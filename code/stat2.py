@@ -1,3 +1,5 @@
+# numpy, pandas, matplotlib 설치해볼것!
+
 import numpy as np
 import matplotlib.pyplot as plt
 
