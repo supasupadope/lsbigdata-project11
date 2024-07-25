@@ -54,7 +54,7 @@ sum(x**2 * (1/33))
 sum(x**2 * (1/33)) - 16**2
 
 
-## Example
+## Example X: 0, 1, 2, 3
 x=np.arange(4)
 x
 pro_x=np.array([1/6, 2/6, 2/6, 1/6])
@@ -86,5 +86,20 @@ sum((x - Ex)**2 * pro_x)
 
 sum(np.arange(50))+sum(np.arange(51))
 
+## Example3 X: 0, 2, 4, 6
+x=np.arange(4)*2
+x
+pro_x=np.array([1/6, 2/6, 2/6, 1/6])
+pro_x
 
+# 기대값
+Ex=sum(x * pro_x)
+Exx=sum(x**2 * pro_x)
 
+# 분산
+Exx - Ex**2
+sum((x - Ex)**2 * pro_x)
+
+4 * 0.916
+
+np.sqrt(9.52**2 / 10)
