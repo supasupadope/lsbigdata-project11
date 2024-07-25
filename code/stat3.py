@@ -232,25 +232,30 @@ norm.cdf(5, 3, 5) - norm.cdf(3, 3, 5)
 x=norm.rvs(loc=3, scale=5, size=1000)
 sum((x > 3) & (x < 5))/1000
 
+
+# 밸런스 게임
+# 이상형과 평생 친구(연애불가) vs.
+# 이상형과 1년 연애 헤어지기 (5년 연애불가)
+# 결론: 이상형과의 1년 연애 == 일반 연애 5년 (True)
+
+
 # 평균:0, 표준편차: 1
 # 표본 1000개 뽑아서 0보다 작은 비율 확인
+x=norm.rvs(loc=0, scale=1, size=1000)
+np.mean(x < 0)
+sum(x < 0)/1000
 
 
+x=norm.rvs(loc=3, scale=2, size=1000)
+x
 
+sns.histplot(x, stat="density")
 
-# 숙제 Qmd
-# 1. 정규분포 pdf 값을 계산하는 자신만의
-# 파이썬 함수를 정의하고, 
-# 정규분포 mu = 3, sigma = 2 의 pdf를 그릴 것.
+# Plot the normal distribution PDF
+xmin, xmax = (x.min(), x.max())
+x_values = np.linspace(xmin, xmax, 100)
+pdf_values = norm.pdf(x_values, loc=3, scale=2)
+plt.plot(x_values, pdf_values, color='red', linewidth=2)
 
-# 2. 파이썬 scipy 패키지 사용해서 다음과 같은
-# 확률을 구하시오.
-# X ~ N(2, 3^2)
-# 1) P(X < 3)
-# 2) P(2 < X < 5)
-# 3) P(X < 3 or X > 7)
-
-# 3. LS 빅데이터 스쿨 학생들의 중간고사 점수는
-# 평균이 30이고, 분산이 4인 정규분포를 따른다.
-# 상위 5%에 해당하는 학생의 점수는?
-
+plt.show()
+plt.clf()
