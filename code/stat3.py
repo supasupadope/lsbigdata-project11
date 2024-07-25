@@ -149,5 +149,108 @@ sns.barplot(prob_x, color="blue")
 # Add a point at (2, 0)
 plt.scatter(x_1, 0.002, color='red', zorder=100, s=10)
 
+# 기대값 표현
+plt.axvline(x=7.8, color='green', 
+            linestyle='--', linewidth=2)
+
 plt.show()
 plt.clf()
+
+
+
+import numpy as np
+import seaborn as sns
+
+x_1 = binom.rvs(n=30, p=0.26, size=10)
+x_1
+x = np.arange(31)
+prob_x = binom.pmf(x, n=30, p=0.26)
+sns.barplot(prob_x, color="blue")
+
+# Add a point at (2, 0)
+plt.scatter(x_1, np.repeat(0.002, 10), 
+            color='red', zorder=10, s=10)
+
+# 기대값 표현
+plt.axvline(x=7.8, color='green', 
+            linestyle='--', linewidth=2)
+
+plt.show()
+plt.clf()
+
+binom.ppf(0.5, n=30, p=0.26)
+binom.ppf(0.7, n=30, p=0.26)
+binom.cdf(8, n=30, p=0.26)
+binom.cdf(9, n=30, p=0.26)
+
+
+1/np.sqrt(2 * math.pi)
+from scipy.stats import norm
+
+norm.pdf(0, loc=0, scale=1)
+norm.pdf(5, loc=3, scale=4)
+
+
+# 정규분포 pdf 그리기
+k=np.linspace(-5, 5, 100)
+y=norm.pdf(k, loc=0, scale=1)
+
+plt.plot(k, y, color="black")
+plt.show()
+plt.clf()
+
+## mu (loc): 분포의 중심 결정하는 모수
+k=np.linspace(-5, 5, 100)
+y=norm.pdf(k, loc=0, scale=1)
+
+plt.plot(k, y, color="black")
+plt.show()
+plt.clf()
+
+## sigma (scale): 분포의 퍼짐 결정하는 모수(표준편차)
+k=np.linspace(-5, 5, 100)
+y=norm.pdf(k, loc=0, scale=1)
+y2=norm.pdf(k, loc=0, scale=2)
+y3=norm.pdf(k, loc=0, scale=0.5)
+plt.plot(k, y, color="black")
+plt.plot(k, y2, color="red")
+plt.plot(k, y3, color="blue")
+plt.show()
+plt.clf()
+
+
+norm.cdf(0, loc=0, scale=1)
+norm.cdf(100, loc=0, scale=1)
+norm.cdf(0.54, loc=0, scale=1) - norm.cdf(-2, loc=0, scale=1)
+norm.cdf(0.54, loc=0, scale=1) - norm.cdf(-2, loc=0, scale=1)
+
+# 정규분포: Normal distribution
+# X ~ N(3, 5^2)
+# P(3 < X < 5) =? 15.54%
+norm.cdf(5, 3, 5) - norm.cdf(3, 3, 5)
+# 위 확률변수에서 표본 1000개 뽑아보자!
+x=norm.rvs(loc=3, scale=5, size=1000)
+sum((x > 3) & (x < 5))/1000
+
+# 평균:0, 표준편차: 1
+# 표본 1000개 뽑아서 0보다 작은 비율 확인
+
+
+
+
+# 숙제 Qmd
+# 1. 정규분포 pdf 값을 계산하는 자신만의
+# 파이썬 함수를 정의하고, 
+# 정규분포 mu = 3, sigma = 2 의 pdf를 그릴 것.
+
+# 2. 파이썬 scipy 패키지 사용해서 다음과 같은
+# 확률을 구하시오.
+# X ~ N(2, 3^2)
+# 1) P(X < 3)
+# 2) P(2 < X < 5)
+# 3) P(X < 3 or X > 7)
+
+# 3. LS 빅데이터 스쿨 학생들의 중간고사 점수는
+# 평균이 30이고, 분산이 4인 정규분포를 따른다.
+# 상위 5%에 해당하는 학생의 점수는?
+
