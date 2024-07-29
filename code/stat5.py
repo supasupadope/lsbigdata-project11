@@ -54,3 +54,32 @@ z_005
 # 신뢰구간
 x.mean() + z_005 * 6 / np.sqrt(16)
 x.mean() - z_005 * 6 / np.sqrt(16)
+
+# 데이터로부터 E[X^2] 구하기
+x=norm.rvs(loc=3, scale=5, size=100000)
+
+np.mean(x**2)
+# sum(x**2) / (len(x) - 1)
+np.mean((x - x**2) / (2*x))
+
+np.random.seed(20240729)
+x=norm.rvs(loc=3, scale=5, size=100000)
+x_bar = x.mean()
+s_2 = sum((x - x_bar)**2) / (100000-1)
+s_2
+# np.var(x) 사용하면 안됨 주의! # n으로 나눈 값
+np.var(x, ddof=1) # n-1로 나눈 값 (표본 분산)
+
+# n-1 vs. n
+x=norm.rvs(loc=3, scale=5, size=20)
+np.var(x)
+np.var(x, ddof=1)
+
+# 숙제 표본 분산 n-1 vs. n
+# 표본 분산 계산 시 왜 n-1로 나누는지 알아보도록 하겠습니다.
+# 균일분포 (3, 7)에서 20개의 표본을 뽑아서
+# 분산을 2가지 방법으로 추정해보세요.
+# n-1로 나눈 것을 s_2, n으로 나눈 것을 k_2로 정의하고,
+# s_2의 분포와 k_2의 분포를 그려주세요! (10000개 사용)
+# 각 분포 그래프에 모분산의 위치에 녹색 막대를 그려주세요.
+
