@@ -42,5 +42,15 @@ plt.gca().set_aspect('equal', adjustable='box')
 plt.show()
 plt.clf()
 
+from scipy.stats import norm
+import numpy as np
 
+x=np.array([79.1, 68.8, 62.0, 74.4, 71.0, 60.6, 98.5, 86.4, 73.0, 40.8, 61.2, 68.7, 61.6, 67.7, 61.7, 66.8])
+x.mean()
+len(x)
 
+z_005=norm.ppf(0.95, loc=0, scale=1)
+z_005
+# 신뢰구간
+x.mean() + z_005 * 6 / np.sqrt(16)
+x.mean() - z_005 * 6 / np.sqrt(16)
