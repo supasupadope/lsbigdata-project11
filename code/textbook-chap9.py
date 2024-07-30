@@ -94,6 +94,9 @@ welfare=welfare.assign(age_group = pd.cut(welfare["age"],
                 bins=bin_cut, 
                 labels=(np.arange(12) * 10).astype(str) + "대"))
 
+# np.version.version
+# (np.arange(12) * 10).astype(str) + "대"
+
 age_income=welfare.dropna(subset="income") \
                     .groupby("age_group", as_index=False) \
                     .agg(mean_income = ("income", "mean"))
@@ -103,10 +106,47 @@ sns.barplot(data=age_income, x="age_group", y="mean_income")
 plt.show()
 plt.clf()
 
-welfare
+# 판다스 데이터 프레임을 다룰 때, 변수의 타입이
+# 카테고리로 설정되어 있는 경우, groupby+agg 콤보
+# 안먹힘. 그래서 object 타입으로 바꿔 준 후 수행
+welfare["age_group"]=welfare["age_group"].astype("object")
+
+def my_f(vec):
+    return vec.sum()
+
 sex_age_income = \
     welfare.dropna(subset="income") \
     .groupby(["age_group", "sex"], as_index=False) \
-    .agg(mean_income=("income", "mean"))
+    .agg(top4per_income=("income", lambda x: my_f(x)))
+    
+sex_age_income
+
+
+sex_age_income = \
+    welfare.dropna(subset="income") \
+    .groupby(["age_group", "sex"], as_index=False) \
+    .agg(top4per_income=("income", lambda x: np.quantile(x, q=0.96))
     
     
+
+
+sex_age_income
+
+sns.barplot(data=sex_age_income,
+            x="age_group", y="mean_income", 
+            hue="sex")
+plt.show()
+plt.clf()
+
+# 연령대별, 성별 상위 4% 수입 찾아보세요!
+
+import pandas as pd
+
+# 예제 데이터 프레임 생성
+data = {
+    'income': [50000, 60000, 70000, None, 80000, 90000, None, 100000, 110000],
+    'age_group': ['20대', '30대', '40대', '20대', '30대', '40대', None, '20대', '30대'],
+    'sex': ['M', 'F', 'M', 'F', None, 'M', 'F', 'M', 'F']
+}
+welfare = pd.DataFrame(data)
+
