@@ -75,11 +75,11 @@ plt.show()
 plt.clf()
 
 # t 분포에 대해서 알아보자!
-# X ~ t(n)
+# X ~ t(df)
 # 종모양, 대칭분포, 중심 0
-# 모수 n: 자유도라고 부름 - 퍼짐을 나타내는 모수
-# n 이 작으면 분산 커짐.
-# n 이 무한대로 가면 표준정규분포가 된다.
+# 모수 df: 자유도라고 부름 - 퍼짐을 나타내는 모수
+# df 이 작으면 분산 커짐.
+# df 이 무한대로 가면 표준정규분포가 된다.
 from scipy.stats import t
 
 # t.pdf
@@ -99,7 +99,7 @@ plt.clf()
 
 # X ~ ?(mu, sigma^2)
 # X bar ~ N(mu, sigma^2/n)
-# X bar ~= t(x_bar, s^2/n) 자유도가 n-1인 t 분포
+# X bar ~= t(x_bar, s^2/n) 자유도(df)가 n-1인 t 분포
 x=norm.rvs(loc=15, scale=3, size=16, random_state=42)
 x
 x_bar=x.mean()

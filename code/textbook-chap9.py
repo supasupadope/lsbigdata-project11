@@ -2,13 +2,15 @@
 import pandas as pd
 import numpy as np
 import seaborn as sns
+import matplotlib.pyplot as plt
+# import pyreadstat
 
 raw_welfare=pd.read_spss("./data/koweps/Koweps_hpwc14_2019_beta2.sav")
 raw_welfare
 
 welfare=raw_welfare.copy()
 welfare.shape
-welfare.describe()
+# welfare.describe()
 
 welfare=welfare.rename(
     columns = {
@@ -90,16 +92,19 @@ plt.clf()
 # 나이대별 수입 분석
 # cut
 bin_cut=np.array([0, 9, 19, 29, 39, 49, 59, 69, 79, 89, 99, 109, 119])
-welfare=welfare.assign(age_group = pd.cut(welfare["age"], 
-                bins=bin_cut, 
-                labels=(np.arange(12) * 10).astype(str) + "대"))
+welfare=welfare.assign(
+    age_group = pd.cut(welfare["age"], 
+                       bins=bin_cut,
+                       labels=(np.arange(12) * 10).astype(str) + "대")
+)
 
 # np.version.version
 # (np.arange(12) * 10).astype(str) + "대"
 
-age_income=welfare.dropna(subset="income") \
-                    .groupby("age_group", as_index=False) \
-                    .agg(mean_income = ("income", "mean"))
+age_income=welfare. \
+    dropna(subset="income") \
+    .groupby("age_group", as_index=False) \
+    .agg(mean_income = ("income", "mean"))
 
 age_income
 sns.barplot(data=age_income, x="age_group", y="mean_income")
@@ -125,28 +130,58 @@ sex_age_income
 sex_age_income = \
     welfare.dropna(subset="income") \
     .groupby(["age_group", "sex"], as_index=False) \
-    .agg(top4per_income=("income", lambda x: np.quantile(x, q=0.96))
+    .agg(top4per_income=("income", lambda x: np.quantile(x, q=0.96)))
     
-    
-
-
 sex_age_income
 
 sns.barplot(data=sex_age_income,
-            x="age_group", y="mean_income", 
+            x="age_group", y="top4per_income", 
             hue="sex")
 plt.show()
 plt.clf()
 
-# 연령대별, 성별 상위 4% 수입 찾아보세요!
 
-import pandas as pd
+# 9-6장
+welfare["code_job"]
+welfare["code_job"].value_counts()
 
-# 예제 데이터 프레임 생성
-data = {
-    'income': [50000, 60000, 70000, None, 80000, 90000, None, 100000, 110000],
-    'age_group': ['20대', '30대', '40대', '20대', '30대', '40대', None, '20대', '30대'],
-    'sex': ['M', 'F', 'M', 'F', None, 'M', 'F', 'M', 'F']
-}
-welfare = pd.DataFrame(data)
+## 직종데이터 불러오기
+list_job=pd.read_excel("./data/koweps/Koweps_Codebook_2019.xlsx",
+                       sheet_name="직종코드")
+list_job.head()
+
+welfare=welfare.merge(list_job, 
+                      how="left", on="code_job")
+
+df=welfare.dropna(subset=["job", "income"]) \
+        .query("sex=='female'") \
+        .groupby("job", as_index=False) \
+        .agg(mean_income=("income", "mean")) \
+        .sort_values("mean_income", ascending=False) \
+        .head(10)
+
+df
+
+plt.rcParams.update({'font.family': 'Malgun Gothic'})
+sns.barplot(df, y="job", x="mean_income", hue="job")
+# plt.tight_layout()
+plt.show()
+plt.clf()
+
+
+## 9-8
+welfare.info()
+welfare["marriage_type"]
+df=welfare.query("marriage_type != 5") \
+        .groupby("religion", as_index=False) \
+        ["marriage_type"] \
+        .value_counts(normalize=True) # 핵심!
+
+df
+
+df.query("marriage_type == 1") \
+    .assign(proportion=df["proportion"]*100) \
+    .round(1)
+
+
 
