@@ -10,5 +10,5 @@ df.head()
 # 랜덤하게 2명을 뽑아서 보여주는 코드
 import numpy as np
 
-np.random.seed(20240730)
+np.random.seed(20240731)
 np.random.choice(df["이름"], 2, replace=False)
