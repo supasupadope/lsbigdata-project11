@@ -35,6 +35,38 @@ plt.plot(x, y, color="blue")
 plt.show()
 plt.clf()
 
+y = 70 * x + 10
+방 1개 집값: 8천만
+방 2개 집값: 1억 5천
+방 3개 집값: 2억 2천
+방 4개 집값: 2억 9천
+방 5개 집값: 3억 6천
+# 1조: (70, 10) - 0.52186
+# 2조: (12, 170) - 0.46138
+# 3조: (53, 45) - 0.40613
+# 4조: (36, 68) - 0.42609
+# 5조: (80, -30) - 0.69897
+# 6조: (47, 63) - 0.46078
+# 7조: (63, 100) - 1.376
+
+# 테스트 집 정보 가져오기
+house_test=pd.read_csv("./data/houseprice/test.csv")
+a=70; b=10
+(a * house_test["BedroomAbvGr"] + b) * 1000
+
+# sub 데이터 불러오기
+sub_df=pd.read_csv("./data/houseprice/sample_submission.csv")
+sub_df
+
+# SalePrice 바꿔치기
+sub_df["SalePrice"] = (a * house_test["BedroomAbvGr"] + b) * 1000
+sub_df
+
+
+# 직선을 구하는 방법
+
+
+sub_df.to_csv("./data/houseprice/sample_submission3.csv", index=False)
 
 
 
