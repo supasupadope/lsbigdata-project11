@@ -179,7 +179,9 @@ plt.legend()
 plt.show()
 plt.clf()
 
-
+# ====================
+# =====   옵션   =====
+# ====================
 
 import numpy as np
 from scipy.optimize import minimize
