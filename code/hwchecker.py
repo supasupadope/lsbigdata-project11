@@ -12,3 +12,9 @@ import numpy as np
 
 np.random.seed(20240731)
 np.random.choice(df["이름"], 2, replace=False)
+
+
+np.random.seed(20240801)
+np.random.choice(np.arange(7)+1, 7, replace=False)
+np.random.choice(np.arange(4)+1, 1, replace=False)
+
