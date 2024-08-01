@@ -21,9 +21,23 @@ plt.clf()
 
 import pandas as pd
 
+a = 80
+b = 5
+
+x = np.linspace(0, 5, 100)
+y = a * x + b
+
 house_train=pd.read_csv("./data/houseprice/train.csv")
-my_df=house_train[["BedroomAbvGr", "SalePrice"]].head()
-plt.scatter(my_df, x="BedroomAbvGr", y="SalePrice")
+my_df=house_train[["BedroomAbvGr", "SalePrice"]].head(10)
+my_df["SalePrice"]=my_df["SalePrice"] /1000
+plt.scatter(x=my_df["BedroomAbvGr"], y=my_df["SalePrice"])
+plt.plot(x, y, color="blue")
 plt.show()
 plt.clf()
+
+
+
+
+
+
 
