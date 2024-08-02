@@ -32,10 +32,10 @@ model.fit(x, y)  # 자동으로 기울기, 절편 값을 구해줌
 model.coef_      # 기울기 a
 model.intercept_ # 절편 b
 
-def my_houseprice(x, y):
-    return model.coef_[0]*x + model.coef_[1]*y + model.intercept_
-
-my_houseprice(300, 55)
+# def my_houseprice(x, y):
+#     return model.coef_[0]*x + model.coef_[1]*y + model.intercept_
+# 
+# my_houseprice(300, 55)
 
 my_houseprice(house_test["GrLivArea"], house_test["GarageArea"])
 
@@ -55,7 +55,7 @@ sub_df["SalePrice"] = pred_y
 sub_df
 
 # csv 파일로 내보내기
-sub_df.to_csv("./data/houseprice/sample_submission6.csv", index=False)
+sub_df.to_csv("./data/houseprice/sample_submission7.csv", index=False)
 
 # 시각화
 # 직선값 계산
