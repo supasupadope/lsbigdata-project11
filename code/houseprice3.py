@@ -193,8 +193,6 @@ sub_df
 # csv 파일로 내보내기
 sub_df.to_csv("./data/houseprice/sample_submission4.csv", index=False)
 
-
-
 # ====================
 # =====   옵션   =====
 # ====================
