@@ -140,6 +140,7 @@ plt.clf()
 
 # 필요한 패키지 불러오기
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 
@@ -178,6 +179,21 @@ plt.ylabel('y')
 plt.legend()
 plt.show()
 plt.clf()
+
+test_x = np.array(house_test["BedroomAbvGr"]).reshape(-1, 1)
+test_x
+
+pred_y=model.predict(test_x) # test 셋에 대한 집값
+pred_y
+
+# SalePrice 바꿔치기
+sub_df["SalePrice"] = pred_y*1000
+sub_df
+
+# csv 파일로 내보내기
+sub_df.to_csv("./data/houseprice/sample_submission4.csv", index=False)
+
+
 
 # ====================
 # =====   옵션   =====
@@ -218,6 +234,59 @@ initial_guess = [0, 0]
 
 # 최소값 찾기
 result = minimize(line_perform, initial_guess)
+
+# 결과 출력
+print("최소값:", result.fun)
+print("최소값을 갖는 x 값:", result.x)
+
+
+# y=x^2 + 3의 최소값이 나오는 입력값 구하기
+def my_f(x):
+    return x**2+3
+
+my_f(3)
+
+import numpy as np
+from scipy.optimize import minimize
+
+# 초기 추정값
+initial_guess = [-10]
+
+# 최소값 찾기
+result = minimize(my_f, initial_guess)
+
+# 결과 출력
+print("최소값:", result.fun)
+print("최소값을 갖는 x 값:", result.x)
+
+# z = x^2 + y^2 + 3
+def my_f2(x):
+    return x[0]**2 + x[1]**2 + 3
+
+my_f2([1, 3])
+
+# 초기 추정값
+initial_guess = [-10, 3]
+
+# 최소값 찾기
+result = minimize(my_f2, initial_guess)
+
+# 결과 출력
+print("최소값:", result.fun)
+print("최소값을 갖는 x 값:", result.x)
+
+
+# f(x, y, z) = (x-1)^2 + (y-2)^2 + (z-4)^2 + 7
+def my_f3(x):
+    return (x[0]-1)**2 + (x[1]-2)**2 + (x[2]-4)**2 + 7
+
+my_f3([1, 2, 3])
+
+# 초기 추정값
+initial_guess = [-10, 3, 4]
+
+# 최소값 찾기
+result = minimize(my_f3, initial_guess)
 
 # 결과 출력
 print("최소값:", result.fun)
