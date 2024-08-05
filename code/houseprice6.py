@@ -21,17 +21,16 @@ x = house_train.select_dtypes(include=[int, float])
 # 필요없는 칼럼 제거하기
 x = x.iloc[:,1:-1]
 y = house_train["SalePrice"]
-x.isna().sum()
+
 
 # 변수별로 결측값 채우기
 fill_values = {
-    'LotFrontage': 0,  
-    'MasVnrArea': df['B'].mean(), 
-    'GarageYrBlt': 0
+    'LotFrontage': x["LotFrontage"].mean(),  
+    'MasVnrArea': x["MasVnrArea"].mean()[0], 
+    'GarageYrBlt': x["GarageYrBlt"].mean()[0]
 }
-
-df_filled = df.fillna(value=fill_values)
-
+x = x.fillna(value=fill_values)
+x.isna().sum()
 
 # 선형 회귀 모델 생성
 model = LinearRegression()
@@ -44,14 +43,20 @@ model.coef_      # 기울기 a
 model.intercept_ # 절편 b
 
 # 테스트 데이터 예측
-test_x = house_test[["GrLivArea", "GarageArea"]]
-test_x
+test_x = house_test.select_dtypes(include=[int, float])
+test_x = test_x.iloc[:,1:]
+
+# fill_values = {
+#     'LotFrontage': test_x["LotFrontage"].mean(),
+#     'MasVnrArea': test_x["MasVnrArea"].mode()[0],
+#     'GarageYrBlt': test_x["GarageYrBlt"].mode()[0]
+# }
+# test_x = test_x.fillna(value=fill_values)
+test_x=test_x.fillna(test_x.mean())
+
 
 # 결측치 확인
-test_x["GrLivArea"].isna().sum()
-test_x["GarageArea"].isna().sum()
-# test_x.fillna(house_test["GarageArea"].mean(), inplace=True)
-test_x=test_x.fillna(house_test["GarageArea"].mean())
+test_x.isna().sum()
 
 # 테스트 데이터 집값 예측
 pred_y=model.predict(test_x) # test 셋에 대한 집값
@@ -62,4 +67,4 @@ sub_df["SalePrice"] = pred_y
 sub_df
 
 # csv 파일로 내보내기
-sub_df.to_csv("./data/houseprice/sample_submission7.csv", index=False)
+sub_df.to_csv("./data/houseprice/sample_submission9.csv", index=False)
