@@ -47,12 +47,7 @@ model.intercept_ # 절편 b
 test_x = house_test.select_dtypes(include=[int, float])
 test_x = test_x.iloc[:,1:]
 
-# fill_values = {
-#     'LotFrontage': test_x["LotFrontage"].mean(),
-#     'MasVnrArea': test_x["MasVnrArea"].mode()[0],
-#     'GarageYrBlt': test_x["GarageYrBlt"].mode()[0]
-# }
-# test_x = test_x.fillna(value=fill_values)
+# 결측치 채우기
 test_x=test_x.fillna(test_x.mean())
 
 
