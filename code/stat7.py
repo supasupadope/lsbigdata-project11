@@ -74,14 +74,31 @@ test3_data
 
 from scipy.stats import ttest_1samp
 
-result = ttest_1samp(test3_data["score_diff"], popmean=0, alternative='greater')
+result = ttest_1samp(test3_data["score_diff"], 
+                     popmean=0, alternative='greater')
 t_value=result[0] # t 검정통계량
 p_value=result[1] # 유의확률 (p-value)
 t_value; p_value
 
+# 
+# long to wide: pivot_table()
+tab3_data = tab3.pivot_table(
+    index='id', 
+    columns='group',
+    values='score'
+    ).reset_index()
 
-long_form = tab3_data.reset_index().melt(id_vars='id', value_vars=['before', 'after'], var_name='group', value_name='score')
+# wide to long: melt()
+long_form = tab3_data.melt(
+    id_vars='id', 
+    value_vars=['before', 'after'],
+    var_name='group',
+    value_name='score'
+    )
 
+# 연습
+import seaborn as sns
+tips = sns.load_dataset('tips')
 
 
 
