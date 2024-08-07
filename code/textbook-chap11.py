@@ -87,7 +87,8 @@ result
 # 서울 그래프 그리기
 import seaborn as sns
 sns.scatterplot(data=result,
-    x='x', y='y', hue='gu_name', s=2)
+    x='x', y='y', hue='gu_name', legend=False,
+    palette="viridis", s=2)
 plt.show()
 plt.clf()
 
@@ -102,8 +103,6 @@ sns.scatterplot(
     hue='is_gangnam', s=2)
 plt.show()
 plt.clf()
-
-
 
 # # 데이터프레임 concat 예제
 # df_a = pd.DataFrame({
@@ -136,3 +135,35 @@ plt.clf()
 # # 방법 2
 # gu_name = [geo_seoul["features"][i]["properties"]["SIG_KOR_NM"] for i in range(25))]
 # gu_name
+
+import numpy as np
+import matplotlib.pyplot as plt
+import json
+
+geo_seoul = json.load(open("./data/SIG_Seoul.geojson", encoding="UTF-8"))
+geo_seoul["features"][0]["properties"]
+
+df_pop = pd.read_csv("data/Population_SIG.csv")
+df_seoulpop=df_pop.iloc[1:26]
+df_seoulpop["code"]=df_seoulpop["code"].astype(str)
+df_seoulpop.info()
+
+# 패키지 설치하기
+# !pip install folium
+import folium
+
+center_x=result["x"].mean()
+center_y=result["y"].mean()
+# p.304
+map_sig=folium.Map(location = [37.551, 126.973],
+                  zoom_start=12,
+                  tiles="cartodbpositron")
+
+# 코로플릿
+folium.Choropleth(
+    geo_data=geo_seoul,
+    data=df_seoulpop,
+    columns=("code", "pop"),
+    key_on = "feature.properties.SIG_CD").add_to(map_sig)
+    
+map_sig.save("map_seoul.html")    
