@@ -155,11 +155,12 @@ import folium
 center_x=result["x"].mean()
 center_y=result["y"].mean()
 # p.304
+# 흰 도화지 맵 가져오기
 map_sig=folium.Map(location = [37.551, 126.973],
                   zoom_start=12,
                   tiles="cartodbpositron")
 
-# 코로플릿
+# 코로플릿 사용해서 - 구 경계선 그리기
 folium.Choropleth(
     geo_data=geo_seoul,
     data=df_seoulpop,
@@ -187,5 +188,6 @@ map_sig.save("map_seoul.html")
 
 # 점 찍는 법
 # make_seouldf(0).iloc[:,1:3].mean()
+make_seouldf(1)
 folium.Marker([37.583744, 126.983800], popup="종로구").add_to(map_sig)
 map_sig.save("map_seoul.html")
