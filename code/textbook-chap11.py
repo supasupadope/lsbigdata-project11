@@ -80,9 +80,29 @@ make_seouldf(1)
 
 result=pd.DataFrame({})
 for i in range(25):
-    result=pd.concat([result, draw_seoul(i)], ignore_index=True)    
+    result=pd.concat([result, make_seouldf(i)], ignore_index=True)    
 
 result
+
+# 서울 그래프 그리기
+import seaborn as sns
+sns.scatterplot(data=result,
+    x='x', y='y', hue='gu_name', s=2)
+plt.show()
+plt.clf()
+
+
+# 서울 그래프 그리기
+import seaborn as sns
+gangnam_df=result.assign(is_gangnam=np.where(result["gu_name"]!="강남구", "안강남", "강남"))
+sns.scatterplot(
+    data=gangnam_df,
+    x='x', y='y', legend=False, 
+    palette={"안강남": "grey", "강남": "red"},
+    hue='is_gangnam', s=2)
+plt.show()
+plt.clf()
+
 
 
 # # 데이터프레임 concat 예제
