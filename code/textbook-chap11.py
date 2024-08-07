@@ -64,25 +64,6 @@ draw_seoul(12)
 # 중구  | 126 | 36
 # ......
 # 중구  | 126 | 36
-
-# 파이썬
-# 가죽자켓&썬구리
-# 흰티(셔츠)&청바지
-## 받은 맨투맨 회색티 & 청바지 연청,중청
-## 개발자 코스프레 (체크셔츠)
-# 와이셔츠 슬랙스
-
-# 구이름 만들기
-# 방법 1
-gu_name=list()
-for i in range(25):
-    gu_name.append(geo_seoul["features"][i]["properties"]["SIG_KOR_NM"])
-gu_name
-
-# 방법 2
-gu_name = [geo_seoul["features"][i]["properties"]["SIG_KOR_NM"] for i in range(25))]
-gu_name
-
 # x, y 판다스 데이터 프레임
 import pandas as pd
 
@@ -104,13 +85,11 @@ for i in range(25):
 result
 
 
-
-
 # # 데이터프레임 concat 예제
 # df_a = pd.DataFrame({
-#     'ID': [],
-#     'Name': [],
-#     'Age': []
+#     'ID': [1, 2, 3],
+#     'Name': ['David', 'Eva', 'Frank'],
+#     'Age': [35, 45, 55]
 # })
 # 
 # df_b = pd.DataFrame({
@@ -120,3 +99,20 @@ result
 # })
 # df_a=pd.concat([df_a, df_b])
 
+# 파이썬
+# 가죽자켓&썬구리
+# 흰티(셔츠)&청바지
+## 받은 맨투맨 회색티 & 청바지 연청,중청
+## 개발자 코스프레 (체크셔츠)
+# 와이셔츠 슬랙스
+
+# # 구이름 만들기
+# # 방법 1
+# gu_name=list()
+# for i in range(25):
+#     gu_name.append(geo_seoul["features"][i]["properties"]["SIG_KOR_NM"])
+# gu_name
+# 
+# # 방법 2
+# gu_name = [geo_seoul["features"][i]["properties"]["SIG_KOR_NM"] for i in range(25))]
+# gu_name
