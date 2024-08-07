@@ -166,4 +166,26 @@ folium.Choropleth(
     columns=("code", "pop"),
     key_on = "feature.properties.SIG_CD").add_to(map_sig)
     
-map_sig.save("map_seoul.html")    
+map_sig.save("map_seoul.html")
+
+# 코로플릿 with bins
+# matplotlib 팔레트
+# tab10, tab20, Set1, Paired, Accent, Dark2, Pastel1, hsv 
+# seaborn 팔레트
+# deep, muted, bright, pastel, dark, colorblind, viridis, inferno, magma, plasma
+
+bins = list(df_seoulpop["pop"].quantile([0, 0.2, 0.4, 0.6, 0.8, 1]))
+folium.Choropleth(
+    geo_data=geo_seoul,
+    data=df_seoulpop,
+    columns=("code", "pop"),
+    fill_color="viridis",
+    bins=bins,
+    key_on = "feature.properties.SIG_CD").add_to(map_sig)
+    
+map_sig.save("map_seoul.html")
+
+# 점 찍는 법
+# make_seouldf(0).iloc[:,1:3].mean()
+folium.Marker([37.583744, 126.983800], popup="종로구").add_to(map_sig)
+map_sig.save("map_seoul.html")
