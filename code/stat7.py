@@ -96,9 +96,20 @@ long_form = tab3_data.melt(
     value_name='score'
     )
 
-# 연습
-import seaborn as sns
-tips = sns.load_dataset('tips')
+# 연습 pivot&melt: long to wide, wide to long
+df= pd.DataFrame({"id": [1, 2, 3],
+                  "A": [10, 20, 30],
+                  "B": [40, 50, 60]})
 
+df_long=df.melt(id_vars="id", 
+                value_vars=["A", "B"],
+                var_name="group",
+                value_name="score")
 
+df_wide=df_long.pivot_table(
+                index="id",
+                columns="group",
+                values="score"
+                ).reset_index()
 
+# 30분
