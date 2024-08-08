@@ -66,11 +66,15 @@ fig.show()
 
 # 범주형 변수로 회귀분석 진행하기
 # 범주형 변수인 'species'를 더미 변수로 변환
-penguins_dummies = pd.get_dummies(penguins, 
-                                  columns=['species'],
-                                  drop_first=False)
+penguins_dummies = pd.get_dummies(
+    penguins, 
+    columns=['species'],
+    drop_first=True
+    )
 penguins_dummies.columns
 penguins_dummies.iloc[:,-3:]
+
+
 # x와 y 설정
 x = penguins_dummies[["bill_length_mm", "species_Chinstrap", "species_Gentoo"]]
 y = penguins_dummies["bill_depth_mm"]
@@ -78,3 +82,7 @@ y = penguins_dummies["bill_depth_mm"]
 # 모델 학습
 model = LinearRegression()
 model.fit(x, y)
+
+model.coef_
+model.intercept_
+
