@@ -47,7 +47,7 @@ fig = go.Figure(
 )
 fig.show()
 
-#프레임속성========
+# 프레임속성을 이용한 애니메이션
 # 애니메이션 프레임 생성
 frames = []
 dates = df_covid19_100.loc[df_covid19_100["iso_code"] == "KOR", "date"].unique()
@@ -73,13 +73,19 @@ for date in dates:
         "name": str(date)
     }
     frames.append(frame_data)
+    
+
+# x축과 y축의 범위 설정
+x_range = ['2022-10-03', '2023-01-11']
+y_range = [8900, 88172]
+
 
 # 애니메이션을 위한 레이아웃 설정
 margins_P = {"l": 25, "r": 25, "t": 50, "b": 50}
 layout = {
     "title": "코로나 19 발생현황",
-    "xaxis": {"title": "날짜", "showgrid": False},
-    "yaxis": {"title": "확진자수"},
+    "xaxis": {"title": "날짜", "showgrid": False, "range": x_range},
+    "yaxis": {"title": "확진자수", "range": y_range},
     "margin": margins_P,
     "updatemenus": [{
         "type": "buttons",
@@ -119,4 +125,6 @@ fig = go.Figure(
 )
 
 fig.show()
+
+
 
