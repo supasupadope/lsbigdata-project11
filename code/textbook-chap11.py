@@ -191,3 +191,7 @@ map_sig.save("map_seoul.html")
 make_seouldf(1)
 folium.Marker([37.583744, 126.983800], popup="종로구").add_to(map_sig)
 map_sig.save("map_seoul.html")
+
+
+# House price 데이터의 lon, lat 정보
+# 지도에 표시하기
