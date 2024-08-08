@@ -86,6 +86,18 @@ model.fit(x, y)
 model.coef_
 model.intercept_
 
+regline_y=model.predict(x)
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+sns.scatterplot(x=penguins["bill_length_mm"], y=y, 
+                hue=penguins["species"], palette="deep",
+                legend=False)
+sns.scatterplot(x=penguins["bill_length_mm"], y=regline_y,
+                color="black")
+plt.show()
+plt.clf()
 
 # y = 0.2 * bill_length -1.93 * species_Chinstrap -5.1 * species_Gentoo + 10.56
 # penguins
