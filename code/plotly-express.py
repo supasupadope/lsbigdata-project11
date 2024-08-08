@@ -16,6 +16,9 @@ fig = px.scatter(
     y="bill_depth_mm",
     color="species"
 )
+# 1.제목 크기 키울것,
+# 2.점 크기 크게, 
+# 3.범례 제목 "펭귄 종" 으로 변경
 # 레이아웃 업데이트
 fig.update_layout(
     title=dict(text="팔머펭귄 종별 부리 길이 vs. 깊이", font=dict(color="white")),
@@ -35,4 +38,24 @@ fig.update_layout(
     legend=dict(font=dict(color="white")),
 )
 
+fig.show()
+
+from sklearn.linear_model import LinearRegression
+
+model = LinearRegression()
+penguins=penguins.dropna()
+x=penguins[["bill_length_mm"]]
+y=penguins["bill_depth_mm"]
+
+model.fit(x, y)
+linear_fit=model.predict(x)
+
+fig.add_trace(
+    go.Scatter(
+        mode="lines",
+        x=penguins["bill_length_mm"], y=linear_fit,
+        name="선형회귀직선",
+        line=dict(dash="dot", color="white")
+    )
+)
 fig.show()
