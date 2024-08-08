@@ -86,3 +86,15 @@ model.fit(x, y)
 model.coef_
 model.intercept_
 
+
+# y = 0.2 * bill_length -1.93 * species_Chinstrap -5.1 * species_Gentoo + 10.56
+# penguins
+# species    island  bill_length_mm  ...  body_mass_g     sex  year
+# Adelie     Torgersen            39.5  ...       3800.0  female  2007
+# Chinstrap  Torgersen            40.5  ...       3800.0  female  2007
+# Gentoo     Torgersen            40.5  ...       3800.0  female  2007
+# x1, x2, x3
+# 39.5, 0, 0
+# 40.5, 1, 0
+# y = 0.2 * bill_length -1.93 * species_Chinstrap -5.1 * species_Gentoo + 10.56
+0.2 * 40.5 -1.93 * True -5.1* False + 10.56
