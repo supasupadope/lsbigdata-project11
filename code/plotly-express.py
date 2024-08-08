@@ -14,7 +14,8 @@ fig = px.scatter(
     penguins,
     x="bill_length_mm",
     y="bill_depth_mm",
-    color="species"
+    color="species",
+    # trendline="ols" # p.134
 )
 # 1.제목 크기 키울것,
 # 2.점 크기 크게, 
@@ -49,6 +50,8 @@ y=penguins["bill_depth_mm"]
 
 model.fit(x, y)
 linear_fit=model.predict(x)
+model.coef_
+model.intercept_
 
 fig.add_trace(
     go.Scatter(
