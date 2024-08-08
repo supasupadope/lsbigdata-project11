@@ -14,7 +14,7 @@ house_test=pd.read_csv("./data/houseprice/test.csv")
 sub_df=pd.read_csv("./data/houseprice/sample_submission.csv")
 
 ## 이상치 탐색
-house_train=house_train.query("GrLivArea <= 4500")
+# house_train=house_train.query("GrLivArea <= 4500")
 
 ## 회귀분석 적합(fit)하기
 # house_train["GrLivArea"]   # 판다스 시리즈
@@ -43,7 +43,8 @@ neighborhood_dummies_test = pd.get_dummies(
     house_test["Neighborhood"],
     drop_first=True
     )
-test_x = house_test[["GrLivArea", "GarageArea"]]
+test_x= pd.concat([house_test[["GrLivArea", "GarageArea"]], 
+                   neighborhood_dummies_test], axis=1)
 test_x
 
 # 결측치 확인
@@ -59,19 +60,5 @@ sub_df["SalePrice"] = pred_y
 sub_df
 
 # csv 파일로 내보내기
-sub_df.to_csv("./data/houseprice/sample_submission7.csv", index=False)
+sub_df.to_csv("./data/houseprice/sample_submission10.csv", index=False)
 
-# 시각화
-# 직선값 계산
-y_pred = model.predict(x)
-
-# 데이터와 회귀 직선 시각화
-plt.scatter(x, y, color='blue', label='data')
-plt.plot(x, y_pred, color='red', label='regression')
-plt.xlabel('x')
-plt.ylabel('y')
-plt.xlim([0, 5000])
-plt.ylim([0, 900000])
-plt.legend()
-plt.show()
-plt.clf()
