@@ -3,6 +3,13 @@
 import plotly.graph_objects as go
 import plotly.express as px
 
+# import os
+# # current working directory
+# cwd = os.getcwd()
+# cwd
+# os.chdir('c:\\Users\\USER\\Documents\\LS빅데이터스쿨\\lsbigdata-project1')
+# 주석처리 Ctrl + /
+
 import pandas as pd
 import numpy as np
 
