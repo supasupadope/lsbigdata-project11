@@ -9,11 +9,15 @@ format:
         href: https://github.com/issactoast/lsbigdata-project1/
 ---
 
+# {.toolbar}
+
+여기는 사이드바에 대한 내용이 들어갈 곳입니다.
+
 # Page 1
 
-여기는 페이지 1 입니다.
+## 칼럼
 
-## 첫번째 {height=60%}
+### 첫번째 {height=60%}
 
 ```{python}
 import pandas as pd
@@ -34,9 +38,9 @@ fig = px.scatter(
 fig.show()
 ```
 
-## 두번째 {height=40%}
+### 두번째 {height=40%}
 
-### 테스트1 {.tabset}
+#### 테스트1 {.tabset}
 
 ```{python}
 from itables import show
