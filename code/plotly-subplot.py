@@ -136,7 +136,7 @@ fig = make_subplots(
     row_heights=[0.4, 0.4, 0.2],  # Heights for the total plot and the species-specific plots
     shared_xaxes=True,
     horizontal_spacing=0.05,
-    vertical_spacing=0.05)
+    vertical_spacing=0.1)
 
 # Colors for different species
 colors = {
