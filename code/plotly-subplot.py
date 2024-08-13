@@ -119,3 +119,64 @@ fig.update_xaxes(showticklabels=True)
 fig.update_yaxes(showticklabels=True)
 
 fig
+
+
+# 레이아웃 배치 조정
+# Using the penguins dataset for plotting
+# Create a scatter plot using plotly.subplots with a large total plot and three species-specific subplots below
+# The large plot occupies 2 rows and the species-specific plots occupy 1 row
+
+fig = make_subplots(
+    rows=3, cols=3,
+    specs=[[{'colspan': 3, 'rowspan': 2}, None, None],
+           [None, None, None],
+           [{'colspan': 1}, {'colspan': 1}, {'colspan': 1}]],
+           # This row is needed to accommodate the rowspan of 2 for the total plot
+    subplot_titles=["전체 데이터", "아델리", "친스트랩", "젠투"],
+    row_heights=[0.4, 0.4, 0.2],  # Heights for the total plot and the species-specific plots
+    shared_xaxes=True,
+    horizontal_spacing=0.05,
+    vertical_spacing=0.05)
+
+# Colors for different species
+colors = {
+    "Adelie": "blue",
+    "Chinstrap": "red",
+    "Gentoo": "green"
+}
+
+# Plot for all data with different colors for each species
+for species, color in colors.items():
+    subset = penguins[penguins['species'] == species]
+    fig.add_trace(
+        go.Scatter(
+            x=subset['bill_length_mm'], 
+            y=subset['bill_depth_mm'], 
+            mode='markers',
+            marker=dict(size=8, color=color),
+            name=f'{species}'
+        ),
+        row=1, col=1
+    )
+
+# Subplots for each species in the third logical row
+for i, species in enumerate(penguins['species'].unique(), 1):
+    subset = penguins[penguins['species'] == species]
+    fig.add_trace(
+        go.Scatter(
+            x=subset['bill_length_mm'], 
+            y=subset['bill_depth_mm'], 
+            mode='markers',
+            marker=dict(size=7, line=dict(width=1), color=colors[species]),
+            name=f'{species}'
+        ),
+        row=3, col=i
+    )
+
+# Update xaxis and yaxis properties for all subplots
+fig.update_xaxes(title_text="부리 길이 (mm)")
+fig.update_yaxes(title_text="부리 깊이 (mm)")
+
+# Update layout and size, center title
+fig.update_layout(height=900, width=1000, title_text="펭귄 종별 부리 치수", title_x=0.5)
+fig
