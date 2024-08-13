@@ -29,7 +29,7 @@ fig_subplot.add_trace(
         "mode": "markers",
         "x": penguins.query('species=="Adelie"')["bill_length_mm"],
         "y":penguins.query('species=="Adelie"')["bill_depth_mm"],
-        "name": "Adeli"
+        "name": "Adelie"
     },
     row=1, col=1
 )
@@ -41,7 +41,7 @@ fig_subplot.add_trace(
         "mode": "markers",
         "x": penguins.query('species=="Gentoo"')["bill_length_mm"],
         "y":penguins.query('species=="Gentoo"')["bill_depth_mm"],
-        "name": "Adeli"
+        "name": "Gentoo"
     },
     row=1, col=2
 )
@@ -53,7 +53,7 @@ fig_subplot.add_trace(
         "mode": "markers",
         "x": penguins.query('species=="Chinstrap"')["bill_length_mm"],
         "y":penguins.query('species=="Chinstrap"')["bill_depth_mm"],
-        "name": "Adeli"
+        "name": "Chinstrap"
     },
     row=1, col=3
 )
