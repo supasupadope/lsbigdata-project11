@@ -189,6 +189,50 @@ plt.plot(k, reg_line, color="red")
 plt.ylim(-5, 5)
 plt.scatter(train_df["x"], train_df["y"], color="blue")
 
+
+# 25차 곡선 회귀
+train_df["x16"] = train_df["x"]**16
+train_df["x17"] = train_df["x"]**17
+train_df["x18"] = train_df["x"]**18
+train_df["x19"] = train_df["x"]**19
+train_df["x20"] = train_df["x"]**20
+train_df["x21"] = train_df["x"]**21
+train_df["x22"] = train_df["x"]**22
+train_df["x23"] = train_df["x"]**23
+train_df["x24"] = train_df["x"]**24
+train_df["x25"] = train_df["x"]**25
+train_df
+
+x=train_df[["x", "x2", "x3", "x4", "x5", "x6", "x7", "x8", "x9",
+            "x10", "x11", "x12", "x13", "x14", "x15",
+            "x16", "x17", "x18", "x19", "x20", "x21",
+            "x22", "x23", "x24", "x25"]]
+y=train_df["y"]
+
+model.fit(x, y)
+
+model.coef_
+model.intercept_
+
+k = np.linspace(-4, 4, 200)
+df_k = pd.DataFrame({
+    "x": k, "x2": k**2, "x3": k**3, "x4": k**4,
+    "x5": k**5, "x6": k**6, "x7": k**7, "x8": k**8,
+    "x9": k**9, "x10": k**10, "x11": k**11, "x12": k**12,
+    "x13": k**13, "x14": k**14, "x15": k**15,
+    "x16": k**16, "x17": k**17, "x18": k**18,
+    "x19": k**19, "x20": k**20, "x21": k**21,
+    "x22": k**22, "x23": k**23, "x24": k**24,
+    "x25": k**25
+})
+df_k
+reg_line = model.predict(df_k)
+
+plt.plot(k, reg_line, color="red")
+plt.ylim(-10, 10)
+plt.scatter(train_df["x"], train_df["y"], color="blue")
+
+
 # 테스트 x에 대하여 예측값 구하기
 test_df["x2"] = test_df["x"]**2
 test_df["x3"] = test_df["x"]**3
