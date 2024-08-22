@@ -259,7 +259,7 @@ y_hat=model.predict(x)
 sum((test_df["y"] - y_hat)**2)
 
 # 20차
-
+278823
 
 
 
