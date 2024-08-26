@@ -59,10 +59,22 @@ for i in np.arange(0, 100):
 tr_result
 val_result
 
+import seaborn as sns
 
+df = pd.DataFrame({
+    'l': np.arange(0, 10, 0.1), 
+    'tr': tr_result,
+    'val': val_result
+})
 
+# seaborn을 사용하여 산점도 그리기
+sns.scatterplot(data=df, x='l', y='tr')
+sns.scatterplot(data=df, x='l', y='val', color='red')
+plt.xlim(0, 1)
 
+val_result[0]
+val_result[1]
+np.min(val_result)
 
-
-
+# alpha를 0.1로 선택!
 
