@@ -19,8 +19,6 @@ def line_perform_lasso(beta):
     a=(y - matX @ beta)
     return (a.transpose() @ a) + 3*np.abs(beta).sum()
 
-line_perform([8.55,  5.96, -4.38])
-line_perform([3.76,  1.36, 0])
 line_perform_lasso([8.55,  5.96, -4.38])
 line_perform_lasso([3.76,  1.36, 0])
 
