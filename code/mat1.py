@@ -113,13 +113,57 @@ def line_perform(beta):
     a=(y - matX @ beta)
     return (a.transpose() @ a)
 
-line_perform([6, 1, 3])
+line_perform([ 8.55,  5.96, -4.38])
 
 # 초기 추정값
-initial_guess = [0, 1, 0]
+initial_guess = [0, 0, 0]
 
 # 최소값 찾기
 result = minimize(line_perform, initial_guess)
+
+# 결과 출력
+print("최소값:", result.fun)
+print("최소값을 갖는 x 값:", result.x)
+
+# minimize로 라쏘 베타 구하기
+from scipy.optimize import minimize
+
+def line_perform_lasso(beta):
+    beta=np.array(beta).reshape(3, 1)
+    a=(y - matX @ beta)
+    return (a.transpose() @ a) + 3*np.abs(beta).sum()
+
+line_perform([8.55,  5.96, -4.38])
+line_perform([3.76,  1.36, 0])
+line_perform_lasso([8.55,  5.96, -4.38])
+line_perform_lasso([3.76,  1.36, 0])
+
+# 초기 추정값
+initial_guess = [0, 0, 0]
+
+# 최소값 찾기
+result = minimize(line_perform_lasso, initial_guess)
+
+# 결과 출력
+print("최소값:", result.fun)
+print("최소값을 갖는 x 값:", result.x)
+
+# minimize로 릿지 베타 구하기
+from scipy.optimize import minimize
+
+def line_perform_ridge(beta):
+    beta=np.array(beta).reshape(3, 1)
+    a=(y - matX @ beta)
+    return (a.transpose() @ a) + 3*(beta**2).sum()
+
+line_perform_ridge([8.55,  5.96, -4.38])
+line_perform_ridge([3.76,  1.36, 0])
+
+# 초기 추정값
+initial_guess = [0, 0, 0]
+
+# 최소값 찾기
+result = minimize(line_perform_ridge, initial_guess)
 
 # 결과 출력
 print("최소값:", result.fun)
