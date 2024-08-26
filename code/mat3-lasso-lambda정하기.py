@@ -76,5 +76,6 @@ val_result[0]
 val_result[1]
 np.min(val_result)
 
-# alpha를 0.1로 선택!
-
+# alpha를 0.03로 선택!
+np.argmin(val_result)
+np.arange(0, 1, 0.01)[np.argmin(val_result)]
