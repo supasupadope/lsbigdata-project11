@@ -44,7 +44,7 @@ val_result=np.repeat(0.0, 100)
 tr_result=np.repeat(0.0, 100)
 
 for i in np.arange(0, 100):
-    model= Lasso(alpha=i*0.1)
+    model= Lasso(alpha=i*0.01)
     model.fit(train_x, train_y)
 
     # 모델 성능
@@ -62,7 +62,7 @@ val_result
 import seaborn as sns
 
 df = pd.DataFrame({
-    'l': np.arange(0, 10, 0.1), 
+    'l': np.arange(0, 1, 0.01), 
     'tr': tr_result,
     'val': val_result
 })
@@ -70,7 +70,7 @@ df = pd.DataFrame({
 # seaborn을 사용하여 산점도 그리기
 sns.scatterplot(data=df, x='l', y='tr')
 sns.scatterplot(data=df, x='l', y='val', color='red')
-plt.xlim(0, 1)
+plt.xlim(0, 0.4)
 
 val_result[0]
 val_result[1]
