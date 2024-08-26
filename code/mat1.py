@@ -56,13 +56,12 @@ x=np.array([13, 15,
 x
 vec1=np.repeat(1, 4).reshape(4, 1)
 matX=np.hstack((vec1, x))
+y=np.array([20, 19, 20, 12]).reshape(4, 1)
 matX
 
 beta_vec=np.array([2, 0, 1]).reshape(3, 1)
 beta_vec
 matX @ beta_vec
-
-y=np.array([20, 19, 20, 12]).reshape(4, 1)
 
 (y - matX @ beta_vec).transpose() @ (y - matX @ beta_vec)
 
@@ -89,14 +88,42 @@ b=np.array([1, 2, 3,
 b_inv=np.linalg.inv(b) # 에러남
 np.linalg.det(b) # 행렬식이 항상 0
 
-# 베타 구하기
+# 벡터 형태로 베타 구하기
+matX
+y
 XtX_inv=np.linalg.inv((matX.transpose() @ matX))
 Xty=matX.transpose() @ y
 beta_hat=XtX_inv @ Xty
 beta_hat
 
+# 모델 fit으로 베타 구하기
+from sklearn.linear_model import LinearRegression
 
+model = LinearRegression()
+model.fit(matX[:, 1:], y)
 
+model.intercept_
+model.coef_
+
+# minimize로 베타 구하기
+from scipy.optimize import minimize
+
+def line_perform(beta):
+    beta=np.array(beta).reshape(3, 1)
+    a=(y - matX @ beta)
+    return (a.transpose() @ a)
+
+line_perform([6, 1, 3])
+
+# 초기 추정값
+initial_guess = [0, 1, 0]
+
+# 최소값 찾기
+result = minimize(line_perform, initial_guess)
+
+# 결과 출력
+print("최소값:", result.fun)
+print("최소값을 갖는 x 값:", result.x)
 
 
 
