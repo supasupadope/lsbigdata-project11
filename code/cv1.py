@@ -51,14 +51,33 @@ def make_tr_val(fold_num, df, cv_num=3):
 
     return (train_X, train_y, valid_X, valid_y)
 
-train_X, train_y, valid_X, valid_y = make_tr_val(fold_num=2, df=df)
+train_X, train_y, valid_X, valid_y = make_tr_val(fold_num=0, df=df)
 train_X
 train_y
 valid_X
 valid_y
 
+from sklearn.linear_model import Lasso
 
+# 결과 받기 위한 벡터 만들기
+val_result=np.repeat(0.0, 100)
+tr_result=np.repeat(0.0, 100)
 
+for i in np.arange(0, 100):
+    model= Lasso(alpha=i*0.01)
+    model.fit(train_X, train_y)
+
+    # 모델 성능
+    y_hat_train = model.predict(train_X)
+    y_hat_val = model.predict(valid_X)
+
+    perf_train=sum((train_y - y_hat_train)**2)
+    perf_val=sum((valid_y - y_hat_val)**2)
+    tr_result[i]=perf_train
+    val_result[i]=perf_val
+
+tr_result
+val_result
 
 
 
