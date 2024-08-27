@@ -83,7 +83,6 @@ df['tr']
 sns.scatterplot(data=df, x='lambda', y='tr')
 sns.scatterplot(data=df, x='lambda', y='val', color='red')
 plt.xlim(0, 10)
-plt.ylim(0, 0.4)
 
 val_result[0]
 val_result[1]
