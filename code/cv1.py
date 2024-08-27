@@ -81,6 +81,42 @@ for j in np.arange(0, 3):
     val_result_total[j,:]=val_result
 
 
+import seaborn as sns
+
+df = pd.DataFrame({
+    'lambda': np.arange(0, 1, 0.01), 
+    'tr': tr_result_total.mean(axis=0),
+    'val': val_result_total.mean(axis=0)
+})
+
+df['tr']
+
+# seaborn을 사용하여 산점도 그리기
+sns.scatterplot(data=df, x='lambda', y='tr')
+sns.scatterplot(data=df, x='lambda', y='val', color='red')
+plt.xlim(0, 0.4)
+
+val_result[0]
+val_result[1]
+np.min(val_result)
+
+# alpha를 0.03로 선택!
+np.argmin(val_result)
+np.arange(0, 1, 0.01)[np.argmin(val_result)]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
