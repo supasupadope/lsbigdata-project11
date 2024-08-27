@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.stats import norm
 from scipy.stats import uniform
@@ -9,30 +10,17 @@ np.random.seed(2024)
 x = uniform.rvs(size=30, loc=-4, scale=8)
 y = np.sin(x) + norm.rvs(size=30, loc=0, scale=0.3)
 
-import pandas as pd
 df = pd.DataFrame({
     "y" : y,
     "x" : x
 })
-df
 
 for i in range(2, 21):
     df[f"x{i}"] = df["x"] ** i
 
 df
 
-myindex=np.random.choice(30, 30, replace=False)
-
-myindex[0:10]
-myindex[10:20]
-myindex[20:30]
-
-df.loc[myindex[0:10]]
-df.drop(myindex[0:10])
-
-fold_num=0
-fold_num=1
-def make_tr_val(fold_num, df, cv_num=3):
+def make_tr_val(fold_num, df):
     np.random.seed(2024)
     myindex=np.random.choice(30, 30, replace=False)
 
@@ -54,17 +42,17 @@ def make_tr_val(fold_num, df, cv_num=3):
 
 from sklearn.linear_model import Lasso
 
-val_result_total=np.repeat(0.0, 300).reshape(3, -1)
-tr_result_total=np.repeat(0.0, 300).reshape(3, -1)
+val_result_total=np.repeat(0.0, 3000).reshape(3, -1)
+tr_result_total=np.repeat(0.0, 3000).reshape(3, -1)
 
 for j in np.arange(0, 3):
     train_X, train_y, valid_X, valid_y = make_tr_val(fold_num=j, df=df)
 
     # 결과 받기 위한 벡터 만들기
-    val_result=np.repeat(0.0, 100)
-    tr_result=np.repeat(0.0, 100)
+    val_result=np.repeat(0.0, 1000)
+    tr_result=np.repeat(0.0, 1000)
 
-    for i in np.arange(0, 100):
+    for i in np.arange(0, 1000):
         model= Lasso(alpha=i*0.01)
         model.fit(train_X, train_y)
 
@@ -84,7 +72,7 @@ for j in np.arange(0, 3):
 import seaborn as sns
 
 df = pd.DataFrame({
-    'lambda': np.arange(0, 1, 0.01), 
+    'lambda': np.arange(0, 10, 0.01), 
     'tr': tr_result_total.mean(axis=0),
     'val': val_result_total.mean(axis=0)
 })
@@ -94,15 +82,16 @@ df['tr']
 # seaborn을 사용하여 산점도 그리기
 sns.scatterplot(data=df, x='lambda', y='tr')
 sns.scatterplot(data=df, x='lambda', y='val', color='red')
-plt.xlim(0, 0.4)
+plt.xlim(0, 10)
+plt.ylim(0, 0.4)
 
 val_result[0]
 val_result[1]
-np.min(val_result)
+np.min(val_result_total.mean(axis=0))
 
-# alpha를 0.03로 선택!
-np.argmin(val_result)
-np.arange(0, 1, 0.01)[np.argmin(val_result)]
+# alpha를 2.67로 선택!
+np.argmin(val_result_total.mean(axis=0))
+np.arange(0, 10, 0.01)[np.argmin(val_result_total.mean(axis=0))]
 
 
 
