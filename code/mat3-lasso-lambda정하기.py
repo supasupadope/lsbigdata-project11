@@ -63,14 +63,14 @@ val_result
 import seaborn as sns
 
 df = pd.DataFrame({
-    'l': np.arange(0, 1, 0.01), 
+    'lambda': np.arange(0, 1, 0.01), 
     'tr': tr_result,
     'val': val_result
 })
 
 # seaborn을 사용하여 산점도 그리기
-sns.scatterplot(data=df, x='l', y='tr')
-sns.scatterplot(data=df, x='l', y='val', color='red')
+sns.scatterplot(data=df, x='lambda', y='tr')
+sns.scatterplot(data=df, x='lambda', y='val', color='red')
 plt.xlim(0, 0.4)
 
 val_result[0]
