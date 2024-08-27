@@ -4,7 +4,7 @@ from scipy.stats import norm
 from scipy.stats import uniform
 from sklearn.linear_model import LinearRegression
 
-# 20차 모델 성능을 알아보자능
+# 20차 모델 성능을 알아보자
 np.random.seed(2024)
 x = uniform.rvs(size=30, loc=-4, scale=8)
 y = np.sin(x) + norm.rvs(size=30, loc=0, scale=0.3)
@@ -40,6 +40,7 @@ valid_y
 
 from sklearn.linear_model import Lasso
 
+# 결과 받기 위한 벡터 만들기
 val_result=np.repeat(0.0, 100)
 tr_result=np.repeat(0.0, 100)
 
@@ -79,3 +80,4 @@ np.min(val_result)
 # alpha를 0.03로 선택!
 np.argmin(val_result)
 np.arange(0, 1, 0.01)[np.argmin(val_result)]
+
