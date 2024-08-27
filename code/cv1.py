@@ -80,13 +80,9 @@ df = pd.DataFrame({
 df['tr']
 
 # seaborn을 사용하여 산점도 그리기
-sns.scatterplot(data=df, x='lambda', y='tr')
+# sns.scatterplot(data=df, x='lambda', y='tr')
 sns.scatterplot(data=df, x='lambda', y='val', color='red')
 plt.xlim(0, 10)
-
-val_result[0]
-val_result[1]
-np.min(val_result_total.mean(axis=0))
 
 # alpha를 2.67로 선택!
 np.argmin(val_result_total.mean(axis=0))
