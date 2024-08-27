@@ -88,7 +88,7 @@ model.coef_
 model.intercept_
 # model.predict(test_x)
 
-k=np.linspace(-4, 4, 800)
+k=np.linspace(-4, 4, 80)
 
 k_df = pd.DataFrame({
     "x" : k
