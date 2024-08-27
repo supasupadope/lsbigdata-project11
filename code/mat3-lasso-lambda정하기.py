@@ -88,8 +88,18 @@ model.coef_
 model.intercept_
 # model.predict(test_x)
 
-sorted_train=train_x.sort_values("x")
-reg_line = model.predict(sorted_train)
+k=np.linspace(-4, 4, 800)
 
-plt.plot(sorted_train["x"], reg_line, color="red")
+k_df = pd.DataFrame({
+    "x" : k
+})
+
+for i in range(2, 21):
+    k_df[f"x{i}"] = k_df["x"] ** i
+    
+k_df
+
+reg_line = model.predict(k_df)
+
+plt.plot(k_df["x"], reg_line, color="red")
 plt.scatter(valid_df["x"], valid_df["y"], color="blue")
