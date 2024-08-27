@@ -81,3 +81,15 @@ np.min(val_result)
 np.argmin(val_result)
 np.arange(0, 1, 0.01)[np.argmin(val_result)]
 
+
+model= Lasso(alpha=0.03)
+model.fit(train_x, train_y)
+model.coef_
+model.intercept_
+# model.predict(test_x)
+
+sorted_train=train_x.sort_values("x")
+reg_line = model.predict(sorted_train)
+
+plt.plot(sorted_train["x"], reg_line, color="red")
+plt.scatter(valid_df["x"], valid_df["y"], color="blue")
