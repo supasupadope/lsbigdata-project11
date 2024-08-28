@@ -24,7 +24,7 @@ X_poly=pd.DataFrame(
 )
 
 # 교차 검증 설정
-kf = KFold(n_splits=3, shuffle=True, random_state=2024)
+kf = KFold(n_splits=5, shuffle=True, random_state=2024)
 
 # 알파 값 설정
 alpha_values = np.arange(0, 10, 0.01)
@@ -43,6 +43,8 @@ df = pd.DataFrame({
     'validation_error': mean_scores
 })
 
+df
+
 # 결과 시각화
 plt.plot(df['lambda'], df['validation_error'], label='Validation Error', color='red')
 plt.xlabel('Lambda')
@@ -54,3 +56,6 @@ plt.show()
 # 최적의 alpha 값 찾기
 optimal_alpha = df['lambda'][np.argmin(df['validation_error'])]
 print("Optimal lambda:", optimal_alpha)
+
+
+
