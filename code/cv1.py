@@ -90,33 +90,3 @@ np.arange(0, 10, 0.01)[np.argmin(val_result_total.mean(axis=0))]
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
