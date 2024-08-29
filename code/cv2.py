@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.stats import norm, uniform
 from sklearn.linear_model import Lasso
+from sklearn.linear_model import Ridge
 from sklearn.model_selection import cross_val_score, KFold
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.pipeline import make_pipeline
@@ -31,7 +32,9 @@ def rmse(model):
                                      n_jobs=-1, scoring = "neg_mean_squared_error").mean())
     return(score)
 
+# rmse() 함수 사용 예제
 lasso = Lasso(alpha=0.01)
+ridge = Ridge(alpha=0.01)
 rmse(lasso)
 
 # 각 알파 값에 대한 교차 검증 점수 저장
