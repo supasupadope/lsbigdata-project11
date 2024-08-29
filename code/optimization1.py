@@ -3,7 +3,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-k=6
+k=2.2
 x = np.linspace(-4, 8, 100)
 y = (x - 2)**2 + 1
 # plt.scatter(x, y, s=3)
@@ -20,4 +20,13 @@ l_intercept=f_k - l_slope * k
 # y=slope*x+intercept 그래프
 line_y=l_slope*x + l_intercept
 plt.plot(x, line_y, color="red")
+
+# y=x^2 경사하강법
+# 초기값:10, 델타: 0.9
+x=10
+lstep=np.arange(100, 0, -1)*0.01
+for i in range(100):
+    x-=lstep[i]*(2*x)
+
+print(x)
 
