@@ -49,12 +49,11 @@ plt.scatter(9, 2, color='red', s=50)
 
 x=9; y=2
 lstep=0.1
-x, y = np.array([x, y]) - lstep * np.array([2*x-6, 2*y-8])
-x
-y
+for i in range(100):
+    x, y = np.array([x, y]) - lstep * np.array([2*x-6, 2*y-8])
+    plt.scatter(float(x), float(y), color='red', s=25)
 
-plt.scatter(float(x), float(y), color='red', s=50)
-
+print(x, y)
 
 # 축 레이블 및 타이틀 설정
 plt.xlabel('X')
