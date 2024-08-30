@@ -36,7 +36,6 @@ plt.ylim(-10, 10)
 # 그래프 표시
 plt.show()
 
-
 # 모델 fit으로 베타 구하기
 import pandas as pd
 from sklearn.linear_model import LinearRegression
@@ -50,3 +49,4 @@ model.fit(df[['x']], df['y'])
 
 model.intercept_
 model.coef_
+
