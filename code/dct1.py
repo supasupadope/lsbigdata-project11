@@ -49,7 +49,7 @@ mse2=np.mean((df.query("x >= 20")["y"] - y_hat2)**2)
 
 29.81-29.73
 
-# df=df.query("x >= 16.41")
+df=df.query("x < 16.41")
 
 # 기준값 x를 넣으면 MSE값이 나오는 함수는?
 def my_mse(x):
@@ -61,14 +61,16 @@ def my_mse(x):
     mse2=np.mean((df.query(f"x >= {x}")["y"] - y_hat2)**2)
     return float((mse1* n1 + mse2 * n2)/(n1+n2))
 
-my_mse(16.5)
+my_mse(15)
+my_mse(13.71)
+my_mse(14.01)
 
 df["x"].min()
 df["x"].max()
 
 # 13~22 사이 값 중 0.01 간격으로 MSE 계산을 해서
 # minimize 사용해서 가장 작은 MSE가 나오는 x 찾아보세요!
-x_values=np.arange(16.51, 21.5, 0.01)
+x_values=np.arange(13.2, 16.4, 0.01)
 nk=x_values.shape[0]
 result=np.repeat(0.0, nk)
 for i in range(nk):
