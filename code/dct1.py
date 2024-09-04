@@ -79,7 +79,8 @@ x_values[np.argmin(result)]
 # 14.01, 16.42, 19.4
 
 # x, y 산점도를 그리고, 빨간 평행선 4개 그려주세요!
-import seaborn as sns
+import matplotlib.pyplot as plt
+
 df.plot(kind="scatter", x="x", y="y")
 thresholds=[14.01, 16.42, 19.4]
 df["group"]=np.digitize(df["x"], thresholds)
@@ -88,7 +89,7 @@ k1=np.linspace(13, 14.01, 100)
 k2=np.linspace(14.01, 16.42, 100)
 k3=np.linspace(16.42, 19.4, 100)
 k4=np.linspace(19.4, 22, 100)
-sns.scatterplot(k1, np.repeat(y_mean[0],100), hue="red")
-sns.scatterplot(k2, np.repeat(y_mean[1],100), hue="red")
-sns.scatterplot(k3, np.repeat(y_mean[2],100), hue="red")
-sns.scatterplot(k4, np.repeat(y_mean[3],100), hue="red")
+plt.plot(k1, np.repeat(y_mean[0],100), color="red")
+plt.plot(k2, np.repeat(y_mean[1],100), color="red")
+plt.plot(k3, np.repeat(y_mean[2],100), color="red")
+plt.plot(k4, np.repeat(y_mean[3],100), color="red")
