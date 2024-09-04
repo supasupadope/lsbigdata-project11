@@ -30,14 +30,32 @@ X = df[['x']]  # 독립 변수는 2차원 형태로 제공되어야 함
 y = df['y']
 
 # 학습 데이터와 테스트 데이터로 분할 (80% 학습, 20% 테스트)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X,
+                                                    y,
+                                                    test_size=0.2,
+                                                    random_state=42)
 
 # 디시전 트리 회귀 모델 생성 및 학습
-model = DecisionTreeRegressor(random_state=42)
+model = DecisionTreeRegressor(random_state=42,
+                              max_depth=2)
 model.fit(X_train, y_train)
 
-# 테스트 데이터에 대한 예측
-y_pred = model.predict(X_test)
+
+df_x=pd.DataFrame({"x": x})
+
+# -10, 10까지 데이터에 대한 예측
+y_pred = model.predict(df_x)
+
+
+plt.scatter(df['x'], df['y'], label='Noisy Data')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('Noisy Quadratic Data')
+plt.legend()
+plt.scatter(df_x['x'], y_pred, color="red")
+
+
+
 
 # 모델 평가
 mse = mean_squared_error(y_test, y_pred)
