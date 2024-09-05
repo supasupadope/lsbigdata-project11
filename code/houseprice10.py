@@ -87,16 +87,6 @@ valid_y=valid_df["SalePrice"]
 ## test
 test_x=test_df.drop("SalePrice", axis=1)
 
-# 선형 회귀 모델 생성
-# 라쏘 모델 만들려면?
-from sklearn.linear_model import Lasso
-model= Lasso(alpha=0.03)
-
-# 릿지 모델 만들려면?
-from sklearn.linear_model import Ridge
-model= Ridge(alpha=0.03)
-model = LinearRegression()
-
 from sklearn.linear_model import ElasticNet
 model= ElasticNet()
 
@@ -116,7 +106,12 @@ grid_search=GridSearchCV(
 
 grid_search.fit(train_x, train_y)
 
+grid_search.best_params_
+grid_search.cv_results_
+-grid_search.best_score_
+best_model=grid_search.best_estimator_
 
+best_model.predict(valid_x) # predict 함수 사용가능
 
 # 모델 학습
 model.fit(train_x, train_y)  # 자동으로 기울기, 절편 값을 구해줌
