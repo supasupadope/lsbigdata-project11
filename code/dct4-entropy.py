@@ -71,7 +71,7 @@ param_grid={
 grid_search=GridSearchCV(
     estimator=model,
     param_grid=param_grid,
-    scoring='entropy',
+    scoring='accuracy',
     cv=5
 )
 
