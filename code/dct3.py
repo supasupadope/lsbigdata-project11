@@ -74,8 +74,7 @@ from sklearn.tree import DecisionTreeRegressor
 model = DecisionTreeRegressor(random_state=42)
 param_grid={
     'max_depth': np.arange(7, 20, 1),
-    'min_samples_split': np.arange(10, 30, 1),
-    'min_samples_leaf': np.arange(10, 30, 1)
+    'min_samples_split': np.arange(10, 30, 1)
 }
 
 # 하이퍼파라미터 튜닝
@@ -94,10 +93,10 @@ grid_search.cv_results_
 grid_search.best_score_
 best_model=grid_search.best_estimator_
 
-from sklearn.tree import export_graphviz
-import graphviz
-# !pip install graphviz
+model = DecisionTreeRegressor(random_state=42,
+                              max_depth=2,
+                              min_samples_split=22)
+model.fit(x,y)
 
-dot_data=export_graphviz(best_model)
-graph=graphviz.Source(dot_data)
-graph.view()
+from sklearn import tree
+tree.plot_tree(model)
