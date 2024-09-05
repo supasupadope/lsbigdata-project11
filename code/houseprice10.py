@@ -88,7 +88,34 @@ valid_y=valid_df["SalePrice"]
 test_x=test_df.drop("SalePrice", axis=1)
 
 # 선형 회귀 모델 생성
+# 라쏘 모델 만들려면?
+from sklearn.linear_model import Lasso
+model= Lasso(alpha=0.03)
+
+# 릿지 모델 만들려면?
+from sklearn.linear_model import Ridge
+model= Ridge(alpha=0.03)
 model = LinearRegression()
+
+from sklearn.linear_model import ElasticNet
+model= ElasticNet()
+
+param_grid={
+    'alpha': [0.1, 1.0, 10.0, 100.0],
+    'l1_ratio': [0, 0.1, 0.5, 1.0]
+}
+
+from sklearn.model_selection import GridSearchCV
+grid_search=GridSearchCV(
+    estimator=model,
+    param_grid=param_grid,
+    scoring='neg_mean_squared_error',
+    cv=5
+)
+
+grid_search.fit(train_x, train_y)
+
+
 
 # 모델 학습
 model.fit(train_x, train_y)  # 자동으로 기울기, 절편 값을 구해줌
