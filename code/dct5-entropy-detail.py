@@ -31,29 +31,29 @@ plt.axvline(x=45)
 p_i=df['y'].value_counts() / len(df['y'])
 entropy_curr=-sum(p_i * np.log2(p_i))
 
-# x=45 기준으로 나눈 후, 평균 엔트로피 구하기!
-# 10분!
+# x1=45 기준으로 나눈 후, 평균 엔트로피 구하기!
+# x1=45 기준으로 나눴을때, 데이터포인트가 몇개 씩 나뉘나요?
+n1=df.query("x1 < 45").shape[0]  # 1번 그룹
+n2=df.query("x1 >= 45").shape[0] # 2번 그룹
+
+# 1번 그룹은 어떤 종류로 예측하나요?
+# 2번 그룹은 어떤 종류로 예측하나요?
+y_hat1=df.query("x1 < 45")['y'].mode()
+y_hat2=df.query("x1 >= 45")['y'].mode()
+
+# 각 그룹 엔트로피는 얼마 인가요?
+p_1=df.query("x1 < 45")['y'].value_counts() / len(df.query("x1 < 45")['y'])
+entropy1=-sum(p_1 * np.log2(p_1))
+
+p_2=df.query("x1 >= 45")['y'].value_counts() / len(df.query("x1 >= 45")['y'])
+entropy2=-sum(p_2 * np.log2(p_2))
+
+entropy_x145=(n1 * entropy1 + n2 * entropy2)/(n1 + n2)
+entropy_x145
 
 
 
 
-# 원래 MSE는?
-np.mean((df["y"] - df["y"].mean())**2)
-29.81
-
-# x=15 기준으로 나눴을때, 데이터포인트가 몇개 씩 나뉘나요?
-# 57, 276
-n1=df.query("x < 15").shape[0]  # 1번 그룹
-n2=df.query("x >= 15").shape[0] # 2번 그룹
-
-# 1번 그룹은 얼마로 예측하나요?
-# 2번 그룹은 얼마로 예측하나요?
-y_hat1=df.query("x < 15").mean()[0]
-y_hat2=df.query("x >= 15").mean()[0]
-
-# 각 그룹 MSE는 얼마 인가요?
-mse1=np.mean((df.query("x < 15")["y"] - y_hat1)**2)
-mse2=np.mean((df.query("x >= 15")["y"] - y_hat2)**2)
 
 # x=15 의 MSE 가중평균은?
 # (mse1 + mse2)*0.5 가 아닌
