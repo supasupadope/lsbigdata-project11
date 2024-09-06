@@ -26,6 +26,10 @@ from sklearn.preprocessing import OneHotEncoder
 penguins = load_penguins()
 penguins.head()
 
+penguins=penguins.drop("species", axis=1)
+y=penguins[['species']]
+
+
 ## Nan 채우기
 quantitative = penguins.select_dtypes(include = [int, float])
 quantitative.isna().sum()
@@ -52,10 +56,6 @@ df = pd.get_dummies(
 )
 df
 
-x=df.drop("species", axis=1)
-y=df[['species']]
-x
-y
 
 # 모델 생성
 from sklearn.tree import DecisionTreeClassifier
