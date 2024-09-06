@@ -52,8 +52,8 @@ entropy_x145=(n1 * entropy1 + n2 * entropy2)/(n1 + n2)
 entropy_x145
 
 
+# 기준값 x를 넣으면 entropy값이 나오는 함수는?
 # x1 기준으로 최적 기준값은 얼마인가?
-# 기준값 x를 넣으면 MSE값이 나오는 함수는?
 def my_entropy(x):
     n1=df.query(f"x < {x}").shape[0]  # 1번 그룹
     n2=df.query(f"x >= {x}").shape[0] # 2번 그룹
