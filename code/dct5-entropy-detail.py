@@ -23,7 +23,8 @@ df
 import seaborn as sns
 
 sns.scatterplot(data=df, x="x1", y="x2", hue='y')
-plt.axvline(x=45)
+plt.axvline(x=42.4)
+plt.axhline(y=16.4, color="red")
 
 # Q. 나누기 전 현재의 엔트로피?
 # Q. 45로 나눴을때, 엔트로피 평균은 얼마인가요?
@@ -33,8 +34,31 @@ entropy_curr=-sum(p_i * np.log2(p_i))
 
 # x1=45 기준으로 나눈 후, 평균 엔트로피 구하기!
 # x1=45 기준으로 나눴을때, 데이터포인트가 몇개 씩 나뉘나요?
-n1=df.query("x1 < 45").shape[0]  # 1번 그룹
-n2=df.query("x1 >= 45").shape[0] # 2번 그룹
+np.sort(df['x1'].unique())
+n1=df.query("x1 < 42.4").shape[0]  # 1번 그룹
+n2=df.query("x1 >= 42.4").shape[0] # 2번 그룹
+
+def entropy(col):
+    entropy_i = []
+    for i in range(len(df[col].unique())):
+        df_left = df[df[col]< df[col].unique()[i]]
+        df_right = df[df[col]>= df[col].unique()[i]]
+        info_df_left = df_left[['y']].value_counts() / len(df_left)
+        info_df_right = df_right[['y']].value_counts() / len(df_right)
+        after_e_left = -sum(info_df_left*np.log2(info_df_left))
+        after_e_right = -sum(info_df_right*np.log2(info_df_right))
+        entropy_i.append(after_e_left * len(df_left)/len(df) + after_e_right * len(df_right)/len(df))
+    return entropy_i
+
+entropy_df = pd.DataFrame({
+    'standard': df['x1'].unique(),
+    'entropy' : entropy('x1')
+    })
+
+entropy_df.iloc[np.argmin(entropy_df['entropy']),:]
+
+# 기준 42.4 , entropy 0.804269
+
 
 # 1번 그룹은 어떤 종류로 예측하나요?
 # 2번 그룹은 어떤 종류로 예측하나요?
