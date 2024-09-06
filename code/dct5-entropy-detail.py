@@ -52,32 +52,9 @@ entropy_x145=(n1 * entropy1 + n2 * entropy2)/(n1 + n2)
 entropy_x145
 
 
-
-
-
-# x=15 의 MSE 가중평균은?
-# (mse1 + mse2)*0.5 가 아닌
-(mse1* n1 + mse2 * n2)/(n1+n2)
-29.23
-
-29.81 - 29.23
-
-# x = 20일때 MSE 가중평균은?
-n1=df.query("x < 20").shape[0]  # 1번 그룹
-n2=df.query("x >= 20").shape[0] # 2번 그룹
-y_hat1=df.query("x < 20").mean()[0]
-y_hat2=df.query("x >= 20").mean()[0]
-mse1=np.mean((df.query("x < 20")["y"] - y_hat1)**2)
-mse2=np.mean((df.query("x >= 20")["y"] - y_hat2)**2)
-(mse1* n1 + mse2 * n2)/(n1+n2)
-29.73
-
-29.81-29.73
-
-df=df.query("x < 16.41")
-
+# x1 기준으로 최적 기준값은 얼마인가?
 # 기준값 x를 넣으면 MSE값이 나오는 함수는?
-def my_mse(x):
+def my_entropy(x):
     n1=df.query(f"x < {x}").shape[0]  # 1번 그룹
     n2=df.query(f"x >= {x}").shape[0] # 2번 그룹
     y_hat1=df.query(f"x < {x}").mean()[0]
