@@ -58,9 +58,32 @@ print(odds_data)
 
 sns.regplot(data=odds_data, x='rank', y='log_odds')
 
-
 import statsmodels.api as sm
 model = sm.formula.ols("log_odds ~ rank", data=odds_data).fit()
 print(model.summary())
+
+import numpy as np
+np.exp(-0.5675)
+
+import statsmodels.api as sm
+admission_data = pd.read_csv("./data/admission.csv")
+
+# admission_data['rank'] = admission_data['rank'].astype('category')
+admission_data['gender'] = admission_data['gender'].astype('category')
+
+model = sm.formula.logit("admit ~ gre + gpa + rank + gender", data=admission_data).fit()
+
+print(model.summary())
+입학할 확률의 오즈가 
+np.exp(0.7753)
+
+# 여학생
+# GPA: 3.5
+# GRE: 500
+# Rank: 2
+
+# 합격 확률 예측해보세요!
+
+
 
 
