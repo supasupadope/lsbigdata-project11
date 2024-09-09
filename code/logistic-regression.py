@@ -105,3 +105,13 @@ np.exp(0.7753)
 0.3104, 0.2369
 0.2133, 0.271
 
+from scipy.stats import norm
+
+2*(1-norm.cdf(2.123, loc=0, scale=1))
+2*norm.cdf(-2.123, loc=0, scale=1)
+
+stat_value=-2*(-249.99 - (-229.69))
+
+from scipy.stats import chi2
+
+1-chi2.cdf(stat_value, df=4) # df=변수갯수
