@@ -56,10 +56,11 @@ odds_data['odds'] = odds_data['p_admit'] / (1 - odds_data['p_admit'])
 odds_data['log_odds'] = np.log(odds_data['odds'])
 print(odds_data)
 
-
 sns.regplot(data=odds_data, x='rank', y='log_odds')
 
 
-
+import statsmodels.api as sm
+model = sm.formula.ols("log_odds ~ rank", data=odds_data).fit()
+print(model.summary())
 
 
