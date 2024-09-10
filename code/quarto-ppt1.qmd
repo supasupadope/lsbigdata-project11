@@ -3,7 +3,8 @@ title: "쿼토 PPT 만들기"
 author: "Issac Lee"
 format: 
     revealjs:
-        incremental: false 
+        theme: moon
+        incremental: false
 ---
 
 ## 문제 1
@@ -30,23 +31,41 @@ format:
 
 ```{python}
 #| echo: true
-import numpy as np
-import matplotlib.pyplot as plt
+#| code-line-numbers: "4,6"
+import numpy as np               # <1>
+import matplotlib.pyplot as plt  # <2>
 
 x=np.arange(10)
 y=x**2
 plt.scatter(x, y)
 ```
+1. 넘파이를 로드합니다.
+2. 그래프를 위한 matplotlib 로드
 
 :::
 
 ::::
 
-## 내 맘대로 제목 만들기
+## 내 맘대로 제목 만들기 {.smaller}
 
 이것은 본문입니다.
 
 - 아이템 1
 - 아이템 2
+    - 서브 아이템 1
+    - 서브 아이템 2
+
+## 스크롤 가능한 페이지 {.scrollable}
+
+- 아이템 1
+- 아이템 2
+    - 서브 아이템 1
+    - 서브 아이템 2
+- 아이템 3
+- 아이템 4
+    - 서브 아이템 1
+    - 서브 아이템 2
+- 아이템 5
+- 아이템 6
     - 서브 아이템 1
     - 서브 아이템 2
