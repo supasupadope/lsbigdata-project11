@@ -28,7 +28,15 @@ format:
 
 ::: {.column width="60%"}
 
-이미지가 들어갈 수 있겠죠?
+```{python}
+#| echo: true
+import numpy as np
+import matplotlib.pyplot as plt
+
+x=np.arange(10)
+y=x**2
+plt.scatter(x, y)
+```
 
 :::
 
