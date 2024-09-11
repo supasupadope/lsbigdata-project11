@@ -96,10 +96,16 @@ from sklearn.model_selection import GridSearchCV
 
 train_x.shape[0]
 btstrap_index1=np.random.choice(np.arange(1458), 1000, replace=True)
-train_x.iloc
+bts_train_x1=train_x.iloc[btstrap_index1,:]
+bts_train_y1=np.array(train_y)[btstrap_index1]
+
+btstrap_index2=np.random.choice(np.arange(1458), 1458, replace=True)
+bts_train_x2=train_x.iloc[btstrap_index2,:]
+bts_train_y2=np.array(train_y)[btstrap_index2]
 
 
-model = DecisionTreeRegressor(random_state=42)
+model = DecisionTreeRegressor(random_state=42,
+                              max_features="sqrt")
 param_grid={
     'max_depth': np.arange(7, 20, 1),
     'min_samples_split': np.arange(10, 30, 1)
@@ -110,4 +116,16 @@ grid_search=GridSearchCV(
     scoring='neg_mean_squared_error',
     cv=5
 )
-grid_search.fit(train_x, train_y)
+grid_search.fit(bts_train_x1, bts_train_y1)
+grid_search.best_params_
+bts_model1=grid_search.best_estimator_
+
+grid_search.fit(bts_train_x2, bts_train_y2)
+grid_search.best_params_
+bts_model2=grid_search.best_estimator_
+
+bts1_y=bts_model1.predict(test_x)
+bts2_y=bts_model2.predict(test_x)
+(bts1_y + bts2_y)/2
+
+# 평균

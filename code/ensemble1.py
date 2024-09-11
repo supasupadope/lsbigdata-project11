@@ -1,9 +1,16 @@
 from sklearn.ensemble import BaggingClassifier
+from sklearn.ensemble import BaggingRegressor
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import DecisionTreeRegressor
+
 
 bagging_model = BaggingClassifier(DecisionTreeClassifier(),
                                   n_estimators=50,
                                   max_samples=100, 
+                                  n_jobs=-1, random_state=42)
+
+bagging_model = BaggingRegressor(DecisionTreeRegressor(),
+                                  n_estimators=2, 
                                   n_jobs=-1, random_state=42)
 
 # * n_estimator: Bagging에 사용될 모델 개수
