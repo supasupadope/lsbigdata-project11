@@ -95,7 +95,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import GridSearchCV
 
 eln_model= ElasticNet()
-rf_model= RandomForestRegressor()
+rf_model= RandomForestRegressor(n_estimators=100)
 
 # 그리드 서치 for ElasticNet
 param_grid={
@@ -113,8 +113,10 @@ best_eln_model=grid_search.best_estimator_
 
 # 그리드 서치 for RandomForests
 param_grid={
-    'alpha': [0.1, 1.0, 10.0, 100.0],
-    'l1_ratio': [0, 0.1, 0.5, 1.0]
+    'max_depth': [3, 5, 7],
+    'min_samples_split': [20, 10, 5],
+    'min_samples_leaf': [5, 10, 20, 30],
+    'max_features': ['sqrt', 'log2', None]
 }
 grid_search=GridSearchCV(
     estimator=rf_model,
@@ -123,6 +125,7 @@ grid_search=GridSearchCV(
     cv=5
 )
 grid_search.fit(train_x, train_y)
+grid_search.best_params_
 best_rf_model=grid_search.best_estimator_
 
 
