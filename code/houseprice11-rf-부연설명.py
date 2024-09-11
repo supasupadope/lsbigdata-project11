@@ -104,8 +104,7 @@ bts_train_x2=train_x.iloc[btstrap_index2,:]
 bts_train_y2=np.array(train_y)[btstrap_index2]
 
 
-model = DecisionTreeRegressor(random_state=42,
-                              max_features="sqrt")
+model = DecisionTreeRegressor(random_state=42)
 param_grid={
     'max_depth': np.arange(7, 20, 1),
     'min_samples_split': np.arange(10, 30, 1)
