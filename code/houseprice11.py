@@ -85,17 +85,22 @@ train_df=train_df.query("GrLivArea <= 4500")
 
 ## train
 train_x=train_df.drop("SalePrice", axis=1)
-train_y=train_df["SalePrice"]
+train_y=np.log1p(train_df["SalePrice"])
 
 ## test
 test_x=test_df.drop("SalePrice", axis=1)
 
+# from sklearn.preprocessing import RobustScaler
+# rs = RobustScaler()
+# train_x=pd.DataFrame(rs.fit_transform(train_x), columns=train_x.columns) 
+# test_x=pd.DataFrame(rs.fit_transform(test_x), columns=test_x.columns) 
 from sklearn.linear_model import ElasticNet
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import GridSearchCV
 
 eln_model= ElasticNet()
-rf_model= RandomForestRegressor(n_estimators=100)
+rf_model= RandomForestRegressor(n_estimators=500,
+                                max_features="sqrt")
 
 # 그리드 서치 for ElasticNet
 param_grid={
@@ -106,23 +111,22 @@ grid_search=GridSearchCV(
     estimator=eln_model,
     param_grid=param_grid,
     scoring='neg_mean_squared_error',
-    cv=5
+    cv=5, verbose=1
 )
 grid_search.fit(train_x, train_y)
 best_eln_model=grid_search.best_estimator_
 
 # 그리드 서치 for RandomForests
 param_grid={
-    'max_depth': [3, 5, 7],
-    'min_samples_split': [20, 10, 5],
-    'min_samples_leaf': [5, 10, 20, 30],
-    'max_features': ['sqrt', 'log2', None]
-}
+    'max_depth': [3, 5, 7, 10],
+    'min_samples_split': [5, 10, 20, 30],
+    'min_samples_leaf': [5, 10, 20, 30]
+    }
 grid_search=GridSearchCV(
     estimator=rf_model,
     param_grid=param_grid,
     scoring='neg_mean_squared_error',
-    cv=5
+    cv=5, verbose=1
 )
 grid_search.fit(train_x, train_y)
 grid_search.best_params_
@@ -148,7 +152,8 @@ grid_search=GridSearchCV(
     estimator=rg_model,
     param_grid=param_grid,
     scoring='neg_mean_squared_error',
-    cv=5
+    cv=5,
+    verbose=1
 )
 grid_search.fit(train_x_stack, train_y)
 grid_search.best_params_
@@ -168,9 +173,9 @@ test_x_stack=pd.DataFrame({
 pred_y=blander_model.predict(test_x_stack)
 
 # SalePrice 바꿔치기
-sub_df["SalePrice"] = pred_y
+sub_df["SalePrice"] = np.expm1(pred_y)
 sub_df
 
 # # csv 파일로 내보내기
-sub_df.to_csv("./data/houseprice/sample_submission11.csv", index=False)
+sub_df.to_csv("./data/houseprice/sample_submission_log1p.csv", index=False)
 

@@ -9,8 +9,8 @@ bagging_model = BaggingClassifier(DecisionTreeClassifier(),
                                   max_samples=100, 
                                   n_jobs=-1, random_state=42)
 
-bagging_model = BaggingRegressor(DecisionTreeRegressor(),
-                                  n_estimators=2, 
+bagging_model = BaggingRegressor(ElesticNet(),
+                                  n_estimators=100, 
                                   n_jobs=-1, random_state=42)
 
 # * n_estimator: Bagging에 사용될 모델 개수

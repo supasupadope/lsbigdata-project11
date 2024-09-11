@@ -125,6 +125,6 @@ bts_model2=grid_search.best_estimator_
 
 bts1_y=bts_model1.predict(test_x)
 bts2_y=bts_model2.predict(test_x)
-(bts1_y + bts2_y)/2
 
 # 평균
+(bts1_y + bts2_y)/2
