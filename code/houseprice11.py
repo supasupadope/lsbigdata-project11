@@ -129,14 +129,48 @@ grid_search.best_params_
 best_rf_model=grid_search.best_estimator_
 
 
+# 스택킹
+y1_hat=best_eln_model.predict(train_x) # test 셋에 대한 집값
+y2_hat=best_rf_model.predict(train_x) # test 셋에 대한 집값
+
+train_x_stack=pd.DataFrame({
+    'y1':y1_hat,
+    'y2':y2_hat
+})
+
+from sklearn.linear_model import Ridge
+
+rg_model = Ridge()
+param_grid={
+    'alpha': np.arange(0, 10, 0.01)
+}
+grid_search=GridSearchCV(
+    estimator=rg_model,
+    param_grid=param_grid,
+    scoring='neg_mean_squared_error',
+    cv=5
+)
+grid_search.fit(train_x_stack, train_y)
+grid_search.best_params_
+blander_model=grid_search.best_estimator_
+
+blander_model.coef_
+blander_model.intercept_
+
 pred_y_eln=best_eln_model.predict(test_x) # test 셋에 대한 집값
 pred_y_rf=best_rf_model.predict(test_x) # test 셋에 대한 집값
 
+test_x_stack=pd.DataFrame({
+    'y1': pred_y_eln,
+    'y2': pred_y_rf
+})
+
+pred_y=blander_model.predict(test_x_stack)
 
 # SalePrice 바꿔치기
-# sub_df["SalePrice"] = pred_y
-# sub_df
+sub_df["SalePrice"] = pred_y
+sub_df
 
 # # csv 파일로 내보내기
-# sub_df.to_csv("./data/houseprice/sample_submission10.csv", index=False)
+sub_df.to_csv("./data/houseprice/sample_submission11.csv", index=False)
 
