@@ -91,34 +91,49 @@ train_y=train_df["SalePrice"]
 test_x=test_df.drop("SalePrice", axis=1)
 
 from sklearn.linear_model import ElasticNet
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import GridSearchCV
 
-model= ElasticNet()
+eln_model= ElasticNet()
+rf_model= RandomForestRegressor()
 
+# 그리드 서치 for ElasticNet
 param_grid={
     'alpha': [0.1, 1.0, 10.0, 100.0],
     'l1_ratio': [0, 0.1, 0.5, 1.0]
 }
-
 grid_search=GridSearchCV(
-    estimator=model,
+    estimator=eln_model,
     param_grid=param_grid,
     scoring='neg_mean_squared_error',
     cv=5
 )
-
 grid_search.fit(train_x, train_y)
+best_eln_model=grid_search.best_estimator_
 
-grid_search.best_params_
-best_model=grid_search.best_estimator_
+# 그리드 서치 for RandomForests
+param_grid={
+    'alpha': [0.1, 1.0, 10.0, 100.0],
+    'l1_ratio': [0, 0.1, 0.5, 1.0]
+}
+grid_search=GridSearchCV(
+    estimator=rf_model,
+    param_grid=param_grid,
+    scoring='neg_mean_squared_error',
+    cv=5
+)
+grid_search.fit(train_x, train_y)
+best_rf_model=grid_search.best_estimator_
 
-pred_y=best_model.predict(test_x) # test 셋에 대한 집값
-pred_y
+
+pred_y_eln=best_eln_model.predict(test_x) # test 셋에 대한 집값
+pred_y_rf=best_rf_model.predict(test_x) # test 셋에 대한 집값
+
 
 # SalePrice 바꿔치기
-sub_df["SalePrice"] = pred_y
-sub_df
+# sub_df["SalePrice"] = pred_y
+# sub_df
 
-# csv 파일로 내보내기
-sub_df.to_csv("./data/houseprice/sample_submission10.csv", index=False)
+# # csv 파일로 내보내기
+# sub_df.to_csv("./data/houseprice/sample_submission10.csv", index=False)
 
