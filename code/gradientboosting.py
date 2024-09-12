@@ -15,6 +15,7 @@ tree_model1=DecisionTreeRegressor(max_depth=2)
 tree_model1.fit(X, y)
 y_tree1=tree_model1.predict(X)
 
+# 1차 트리 예측값 시각화
 import matplotlib.pyplot as plt
 plt.scatter(x=X, y=y)
 plt.scatter(x=X, y=y_tree1)
@@ -28,6 +29,10 @@ y_tree2=tree_model2.predict(X)
 plt.scatter(x=X, y=y2)
 plt.scatter(x=X, y=y_tree2)
 
+# 1차 + 2차 트리 예측값 시각화
+plt.scatter(x=X, y=y)
+plt.scatter(x=X, y=y_tree1+y_tree2)
+
 y3=y2-tree_model2.predict(X)
 tree_model3=DecisionTreeRegressor(max_depth=2)
 tree_model3.fit(X, y3)
@@ -37,6 +42,9 @@ y_tree3=tree_model3.predict(X)
 plt.scatter(x=X, y=y3)
 plt.scatter(x=X, y=y_tree3)
 
+# 1차 + 2차 + 3차 트리 예측값 시각화
+plt.scatter(x=X, y=y)
+plt.scatter(x=X, y=y_tree1+y_tree2+y_tree3)
 
 # 새로운 데이터
 X_new=np.array([[0.5], [-0.7], [0.2]])
