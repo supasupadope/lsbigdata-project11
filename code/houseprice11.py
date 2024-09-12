@@ -21,6 +21,10 @@ sub_df=pd.read_csv("./data/houseprice/sample_submission.csv")
 house_train.isna().sum()
 house_test.isna().sum()
 
+
+house_train["SalePrice"].plot(kind="hist")
+np.log(house_train["SalePrice"]).plot(kind="hist")
+np.exp()
 ## 숫자형 채우기
 quantitative = house_train.select_dtypes(include = [int, float])
 quantitative.isna().sum()
