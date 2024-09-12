@@ -43,8 +43,21 @@ plt.scatter(x=X, y=y3)
 plt.scatter(x=X, y=y_tree3)
 
 # 1차 + 2차 + 3차 트리 예측값 시각화
+l_rate=1
 plt.scatter(x=X, y=y)
-plt.scatter(x=X, y=y_tree1+y_tree2+y_tree3)
+plt.scatter(x=X, y=y_tree1+l_rate*y_tree2+l_rate*y_tree3)
 
 # 새로운 데이터
-X_new=np.array([[0.5], [-0.7], [0.2]])
+X_new=np.array([[0.5]])
+
+tree_model1.predict(X_new) + tree_model2.predict(X_new) + tree_model3.predict(X_new)
+
+# 위 내용을 scikit-learn을 사용해서 구현
+from sklearn.ensemble import GradientBoostingRegressor
+
+gbrt=GradientBoostingRegressor(max_depth=2,
+                               n_estimators=3,
+                               learning_rate=1.0,
+                               random_state=42)
+gbrt.fit(X, y)
+gbrt.predict(X)
