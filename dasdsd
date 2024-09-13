@@ -1,0 +1,87 @@
+import numpy as np 
+import pandas as pd 
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.ensemble import RandomForestClassifier, VotingClassifier
+from xgboost import XGBClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+## 필요한 데이터 불러오기
+train = pd.read_csv("./data/titan/train.csv")
+test = pd.read_csv("./data/titan/test.csv")
+sub_df = pd.read_csv("./data/titan/sample_submission.csv")
+
+df = train
+df2 = test
+
+# 결측치 확인
+df.isna().sum()
+
+# NaN 채우기 (숫자형 변수는 평균으로, 범주형 변수는 'unknown'으로 채우기)
+for col in df.select_dtypes(include=[np.number]).columns:
+    df[col].fillna(df[col].mean(), inplace=True)
+for col in df.select_dtypes(include=[object]).columns:
+    df[col].fillna("unknown", inplace=True)
+    
+for col in df2.select_dtypes(include=[np.number]).columns:
+    df2[col].fillna(df2[col].mean(), inplace=True)
+for col in df2.select_dtypes(include=[object]).columns:
+    df2[col].fillna("unknown", inplace=True)
+
+# 더미코딩 및 데이터 분리
+df = pd.concat([df, df2], ignore_index=True)
+df.drop(['PassengerId', 'Name'], axis=1, inplace=True)
+
+columns_to_dummies = df.select_dtypes(include=[object]).columns
+columns_to_dummies = columns_to_dummies.drop('Transported', errors='ignore')
+
+df = pd.get_dummies(df, columns=columns_to_dummies, drop_first=True)
+
+train_n = len(train)
+train_df = df.iloc[:train_n, :]
+test_df = df.iloc[train_n:, :]
+
+# train / test 분리
+train_x = train_df.drop("Transported", axis=1)
+train_y = train_df["Transported"]
+test_x = test_df.drop("Transported", axis=1)
+
+# Transported 열이 True/False 이므로, 이를 0/1로 변환
+train_y = train_y.astype(int)
+
+# Train / Validation 분리
+X_train, X_val, y_train, y_val = train_test_split(train_x, train_y, test_size=0.2, random_state=42)
+
+# 모델 정의
+rf_model = RandomForestClassifier(n_estimators=300, max_depth=None, max_features='sqrt', random_state=42)
+xgb_model = XGBClassifier(n_estimators=300, learning_rate=0.05, max_depth=5, random_state=42)
+
+# xgb depth none바꾸고 n_Es 500으로 바꾸니가 성능 구려짐
+
+# VotingClassifier 정의 (앙상블)
+voting_clf = VotingClassifier(
+    estimators=[('rf', rf_model), ('xgb', xgb_model)],
+    voting='soft'  # 소프트 보팅: 각 모델의 확률을 기반으로 예측
+)
+
+# 앙상블 모델 학습
+voting_clf.fit(X_train, y_train)
+
+# Validation 세트로 예측
+y_pred = voting_clf.predict(X_val)
+
+# 예측 정확도 확인
+accuracy = accuracy_score(y_val, y_pred)
+print(f"Voting Classifier Validation Accuracy: {accuracy * 100:.2f}%")
+
+# 테스트 데이터에 대한 예측
+test_predictions = voting_clf.predict(test_x)
+
+# 예측 값이 0과 1인 경우, 이를 True/False로 변환
+test_predictions = test_predictions == 1
+
+# 예측 결과를 제출 파일 형식으로 저장
+submission = sub_df.copy()
+submission['Transported'] = test_predictions
+submission.to_csv("voting_classifier_submission2.csv", index=False)
